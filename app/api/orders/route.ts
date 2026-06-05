@@ -1,18 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { Prisma } from "@prisma/client";
 import { z } from "zod";
 
-type ProductWithRelations = Prisma.ProductGetPayload<{
-  include: {
-    vendor: true;
-    images: {
-      where: { isPrimary: true };
-      take: 1;
-    };
-  };
-}>;
+const getProductsWithRelations = () =>
+  prisma.product.findMany({
+    include: {
+      vendor: true,
+      images: {
+        where: { isPrimary: true },
+        take: 1,
+      },
+    },
+  });
+
+type ProductWithRelations = Awaited<ReturnType<typeof getProductsWithRelations>>[number];
+type OrderWhereInput = NonNullable<Parameters<typeof prisma.order.findMany>[0]>["where"];
 
 const orderSchema = z.object({
   items: z.array(z.object({
@@ -40,7 +43,7 @@ export async function GET(req: NextRequest) {
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "10");
 
-    const where: Prisma.OrderWhereInput = {};
+    const where: OrderWhereInput = {};
     if (session.user.role !== "ADMIN") {
       where.userId = session.user.id;
     }
