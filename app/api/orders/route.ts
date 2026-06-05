@@ -1,7 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 import { z } from "zod";
+
+type ProductWithRelations = Prisma.ProductGetPayload<{
+  include: {
+    vendor: true;
+    images: {
+      where: { isPrimary: true };
+      take: 1;
+    };
+  };
+}>;
 
 const orderSchema = z.object({
   items: z.array(z.object({
@@ -29,12 +40,15 @@ export async function GET(req: NextRequest) {
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "10");
 
-    const where: Record<string, unknown> =
-      session.user.role === "ADMIN" ? {} : { userId: session.user.id };
-
+    const where: Prisma.OrderWhereInput = {};
+    if (session.user.role !== "ADMIN") {
+      where.userId = session.user.id;
+    }
     if (session.user.role === "VENDOR") {
       const vendor = await prisma.vendor.findUnique({ where: { userId: session.user.id } });
-      if (vendor) where.vendorId = vendor.id;
+      if (vendor) {
+        where.vendorId = vendor.id;
+      }
     }
 
     const [orders, total] = await Promise.all([
@@ -72,7 +86,7 @@ export async function POST(req: NextRequest) {
     const data = orderSchema.parse(body);
 
     // Fetch products and calculate totals
-    const products = await prisma.product.findMany({
+    const products: ProductWithRelations[] = await prisma.product.findMany({
       where: { id: { in: data.items.map((i) => i.productId) }, status: "ACTIVE" },
       include: { vendor: true, images: { where: { isPrimary: true }, take: 1 } },
     });
@@ -83,7 +97,7 @@ export async function POST(req: NextRequest) {
 
     // Group by vendor (create one order per vendor)
     const vendorGroups = data.items.reduce<Record<string, { vendorId: string; items: typeof data.items }>>((acc, item) => {
-      const product = products.find((p) => p.id === item.productId)!;
+      const product = products.find((p: ProductWithRelations) => p.id === item.productId)!;
       if (!acc[product.vendorId]) acc[product.vendorId] = { vendorId: product.vendorId, items: [] };
       acc[product.vendorId].items.push(item);
       return acc;
@@ -91,8 +105,8 @@ export async function POST(req: NextRequest) {
 
     const createdOrders = await Promise.all(
       Object.values(vendorGroups).map(async (group) => {
-        const subtotal = group.items.reduce((sum, item) => {
-          const product = products.find((p) => p.id === item.productId)!;
+        const subtotal = group.items.reduce((sum: number, item) => {
+          const product = products.find((p: ProductWithRelations) => p.id === item.productId)!;
           const price = Number(product.salePrice ?? product.price);
           return sum + price * item.quantity;
         }, 0);
@@ -113,7 +127,7 @@ export async function POST(req: NextRequest) {
             shippingZip: data.shippingAddress.zip,
             items: {
               create: group.items.map((item) => {
-                const product = products.find((p) => p.id === item.productId)!;
+                const product = products.find((p: ProductWithRelations) => p.id === item.productId)!;
                 return {
                   productId: item.productId,
                   quantity: item.quantity,
