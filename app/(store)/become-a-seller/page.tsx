@@ -252,54 +252,7 @@ export default function BecomeASellerPage() {
         </div>
       </section>
 
-      {/* Pricing */}
-      <section className="container mx-auto px-4 lg:px-6 py-20">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-3">Simple, transparent pricing</h2>
-          <p className="text-muted-foreground">No hidden fees. Choose the plan that works for you.</p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-          {plans.map((plan) => (
-            <div
-              key={plan.name}
-              className={`relative rounded-2xl border p-6 ${
-                plan.highlighted
-                  ? "border-[#c9a96e] shadow-xl shadow-[#c9a96e]/10 bg-white"
-                  : "border-border bg-white"
-              }`}
-            >
-              {plan.highlighted && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-[#c9a96e] text-[#1a1a2e] text-xs font-bold rounded-full">
-                  Most Popular
-                </div>
-              )}
-              <div className="mb-6">
-                <h3 className="font-bold text-lg">{plan.name}</h3>
-                <div className="flex items-baseline gap-1 mt-2">
-                  <span className="text-3xl font-bold">{plan.price}</span>
-                  <span className="text-muted-foreground text-sm">{plan.period}</span>
-                </div>
-                <p className="text-sm text-[#c9a96e] font-medium mt-1">{plan.commission} commission per sale</p>
-              </div>
-              <ul className="space-y-3 mb-6">
-                {plan.features.map((feature) => (
-                  <li key={feature} className="flex items-center gap-2 text-sm">
-                    <CheckCircle2 className="h-4 w-4 text-green-500 flex-shrink-0" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-              <Button
-                asChild
-                className={`w-full ${plan.highlighted ? "bg-[#1a1a2e] hover:bg-[#1a1a2e]/90" : ""}`}
-                variant={plan.highlighted ? "default" : "outline"}
-              >
-                <Link href="/register">{plan.cta}</Link>
-              </Button>
-            </div>
-          ))}
-        </div>
-      </section>
+      
 
       {/* Testimonials */}
       <section className="bg-[#1a1a2e] py-20">
