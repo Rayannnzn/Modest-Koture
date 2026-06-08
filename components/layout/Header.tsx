@@ -114,7 +114,7 @@ export default function Header() {
               <div className="w-11 h-11 md:w-13 md:h-13 rounded-xl bg-[#1a1a2e] flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
                 <span className="text-[#c9a96e] font-bold text-xl md:text-2xl">M</span>
               </div>
-              <div className="hidden sm:block">
+              <div className="block">
                 <div className="font-bold text-[#1a1a2e] text-xl md:text-2xl leading-tight tracking-tight">
                   Modest
                 </div>
