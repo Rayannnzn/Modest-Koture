@@ -97,7 +97,7 @@ export default function RegisterPage() {
           </div>
           <div>
             <div className="text-white font-bold text-xl">Modest Kouture</div>
-            <div className="text-[#c9a96e] text-xs tracking-widest">FASHION MARKETPLACE</div>
+            <div className="text-[#c9a96e] text-xs tracking-wide uppercase">FASHION MARKETPLACE</div>
           </div>
         </Link>
 

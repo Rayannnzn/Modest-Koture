@@ -106,12 +106,12 @@ export default function VendorsPage() {
                       {vendor.name}
                     </h3>
                     {vendor.verified && (
-                      <span className="flex items-center justify-center w-4 h-4 rounded-full bg-blue-50 text-blue-500 text-[9px] font-bold border border-blue-100" title="Verified Store">
+                      <span className="flex items-center justify-center w-4 h-4 rounded-full bg-blue-50 text-blue-500 text-[10px] font-semibold border border-blue-100" title="Verified Store">
                         ✓
                       </span>
                     )}
                   </div>
-                  <p className="text-[10px] text-[#c9a96e] uppercase tracking-widest font-bold mb-2">
+                  <p className="text-xs text-[#c9a96e] uppercase tracking-wide font-medium mb-2">
                     {vendor.category}
                   </p>
                   <p className="text-xs text-muted-foreground mb-4 line-clamp-2 leading-relaxed">

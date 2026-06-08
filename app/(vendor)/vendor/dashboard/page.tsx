@@ -179,11 +179,11 @@ export default function VendorDashboardPage() {
                   <span className="text-sm font-bold text-muted-foreground w-5">{i + 1}</span>
                   <div className="flex-1 min-w-0">
                     <p className="text-xs font-medium truncate">{product.title}</p>
-                    <p className="text-[10px] text-muted-foreground">{product.sales} sales</p>
+                    <p className="text-xs text-muted-foreground">{product.sales} sales</p>
                   </div>
                   <div className="text-right">
                     <p className="text-xs font-bold">{product.revenue}</p>
-                    <p className="text-[10px] text-emerald-600">{product.trend}</p>
+                    <p className="text-xs text-emerald-600">{product.trend}</p>
                   </div>
                 </div>
               ))}

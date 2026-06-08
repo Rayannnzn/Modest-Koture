@@ -61,7 +61,7 @@ export default function CategoryGrid() {
                 <span className="text-xs font-semibold text-foreground group-hover:text-[#c9a96e] transition-colors leading-tight">
                   {cat.name}
                 </span>
-                <span className="text-[10px] text-muted-foreground mt-1 tracking-wide uppercase">
+                <span className="text-xs text-muted-foreground mt-1 tracking-wide uppercase">
                   {cat.count}
                 </span>
               </div>

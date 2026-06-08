@@ -121,7 +121,7 @@ export default function Header() {
                 <div className="font-bold text-[#1a1a2e] text-lg md:text-xl leading-tight tracking-tight">
                   Modest
                 </div>
-                <div className="text-[#c9a96e] text-[10px] md:text-xs font-semibold tracking-widest uppercase -mt-0.5 md:-mt-1">
+                <div className="text-[#c9a96e] text-xs font-semibold tracking-wide uppercase -mt-0.5 md:-mt-1">
                   Kouture
                 </div>
               </div>
@@ -172,7 +172,7 @@ export default function Header() {
               >
                 <ShoppingBag className="h-5 w-5" />
                 {count > 0 && (
-                  <span className="absolute -top-1 -right-1 h-4.5 w-4.5 rounded-full bg-[#c9a96e] text-white text-[10px] font-bold flex items-center justify-center min-w-[18px] px-1">
+                  <span className="absolute -top-1 -right-1 h-4.5 w-4.5 rounded-full bg-[#c9a96e] text-white text-xs font-semibold flex items-center justify-center min-w-[18px] px-1">
                     {count > 99 ? "99+" : count}
                   </span>
                 )}
@@ -367,7 +367,7 @@ export default function Header() {
             )}
             {/* Mobile categories */}
             <div className="border-t border-border">
-              <p className="px-4 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+              <p className="px-4 py-2 text-xs font-medium text-muted-foreground uppercase tracking-wide">
                 Categories
               </p>
               <div className="grid grid-cols-3 gap-1 p-3">

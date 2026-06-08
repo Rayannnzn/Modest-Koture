@@ -45,7 +45,7 @@ export default function VendorSidebar() {
           </div>
           <div>
             <div className="text-white font-bold text-sm">Modest Kouture</div>
-            <div className="text-[#c9a96e] text-[10px] tracking-widest">VENDOR PORTAL</div>
+            <div className="text-[#c9a96e] text-xs tracking-wide uppercase">VENDOR PORTAL</div>
           </div>
         </Link>
       </div>
@@ -58,7 +58,7 @@ export default function VendorSidebar() {
           </div>
           <div>
             <p className="text-white text-xs font-semibold">My Store</p>
-            <p className="text-white/40 text-[10px]">Manage your storefront</p>
+            <p className="text-white/40 text-xs">Manage your storefront</p>
           </div>
         </div>
       </div>

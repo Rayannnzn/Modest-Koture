@@ -96,7 +96,7 @@ export default function HeroSlider() {
               )}
             >
               <span
-                className="inline-block px-3.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest mb-4 border"
+                className="inline-block px-3.5 py-1 rounded-md text-xs font-medium uppercase tracking-wide mb-4 border"
                 style={{
                   color: slide.accentColor,
                   borderColor: slide.accentColor + "40",
@@ -115,7 +115,7 @@ export default function HeroSlider() {
                 <Button
                   asChild
                   size="lg"
-                  className="gap-2 text-[#1a1a2e] font-bold uppercase text-xs tracking-widest rounded-lg hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer shadow-lg"
+                  className="gap-2 text-[#1a1a2e] font-semibold uppercase text-xs tracking-wide rounded-lg hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer shadow-lg"
                   style={{ backgroundColor: slide.accentColor }}
                 >
                   <Link href={slide.ctaHref}>
@@ -127,7 +127,7 @@ export default function HeroSlider() {
                   asChild
                   variant="outline"
                   size="lg"
-                  className="border-white/20 text-black hover:bg-white hover:text-[#1a1a2e] uppercase text-xs tracking-widest font-bold rounded-lg transition-colors cursor-pointer"
+                  className="border-white/20 text-black hover:bg-white hover:text-[#1a1a2e] uppercase text-xs tracking-wide font-semibold rounded-lg transition-colors cursor-pointer"
                 >
                   <Link href={slide.secondaryHref}>{slide.secondaryCta}</Link>
                 </Button>
@@ -141,10 +141,10 @@ export default function HeroSlider() {
                   { value: "50K+", label: "Orders Shipped" },
                 ].map((stat) => (
                   <div key={stat.label}>
-                    <div className="text-2xl font-bold font-serif" style={{ color: slide.accentColor }}>
+                    <div className="text-2xl font-bold tabular-nums" style={{ color: slide.accentColor }}>
                       {stat.value}
                     </div>
-                    <div className="text-[10px] text-white/50 uppercase tracking-widest font-semibold mt-0.5">{stat.label}</div>
+                    <div className="text-xs text-white/50 uppercase tracking-wide font-medium mt-0.5">{stat.label}</div>
                   </div>
                 ))}
               </div>

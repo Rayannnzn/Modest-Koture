@@ -97,7 +97,7 @@ export default function AdminDashboardPage() {
                 <div>
                   <p className="font-semibold text-sm">{vendor.name}</p>
                   <p className="text-xs text-muted-foreground">{vendor.owner} · {vendor.category}</p>
-                  <p className="text-[10px] text-muted-foreground mt-0.5">{vendor.applied}</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">{vendor.applied}</p>
                 </div>
                 <div className="flex gap-1.5">
                   <button className="px-2.5 py-1.5 bg-green-100 text-green-700 rounded-lg text-xs font-semibold hover:bg-green-200 transition-colors">
@@ -125,7 +125,7 @@ export default function AdminDashboardPage() {
                 </div>
                 <div className="flex-1">
                   <p className="text-sm">{activity.text}</p>
-                  <p className="text-[10px] text-muted-foreground mt-0.5">{activity.time}</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">{activity.time}</p>
                 </div>
               </div>
             ))}

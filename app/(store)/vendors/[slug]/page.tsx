@@ -84,13 +84,13 @@ export default async function VendorProfilePage({
                 <div className="flex flex-wrap items-center gap-3 mb-1.5">
                   <h1 className="text-3xl font-bold font-serif text-foreground tracking-tight">{vendor.name}</h1>
                   {vendor.verified && (
-                    <span className="flex items-center gap-1 text-[10px] font-bold text-blue-600 bg-blue-50 border border-blue-100 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                    <span className="flex items-center gap-1 text-xs font-medium text-blue-600 bg-blue-50 border border-blue-100 px-2.5 py-0.5 rounded-full uppercase tracking-wide">
                       <CheckCircle2 className="h-3 w-3" />
                       Verified Brand
                     </span>
                   )}
                 </div>
-                <p className="text-[#c9a96e] text-xs font-bold uppercase tracking-widest mb-3">{vendor.category}</p>
+                <p className="text-[#c9a96e] text-xs font-medium uppercase tracking-wide mb-3">{vendor.category}</p>
                 <p className="text-muted-foreground text-sm max-w-2xl mb-4 leading-relaxed">{vendor.description}</p>
                 <div className="flex flex-wrap gap-x-6 gap-y-2 text-xs text-muted-foreground">
                   <div className="flex items-center gap-1.5">
@@ -113,7 +113,7 @@ export default async function VendorProfilePage({
                 </div>
               </div>
             </div>
-            <Button className="bg-[#1a1a2e] hover:bg-black font-semibold text-xs uppercase tracking-wider gap-2 flex-shrink-0 h-10 px-5 rounded-lg w-full md:w-auto shadow-md">
+            <Button className="bg-[#1a1a2e] hover:bg-black font-semibold text-xs uppercase tracking-wide gap-2 flex-shrink-0 h-10 px-5 rounded-lg w-full md:w-auto shadow-md">
               Follow Store
               <ArrowRight className="h-4 w-4" />
             </Button>
@@ -127,8 +127,8 @@ export default async function VendorProfilePage({
               { label: "Positive Reviews", value: `${vendor.rating} / 5.0` },
             ].map((stat) => (
               <div key={stat.label} className="text-center border-r last:border-0 border-muted/50">
-                <div className="text-2xl font-bold text-[#1a1a2e] font-serif">{stat.value}</div>
-                <div className="text-[10px] text-muted-foreground uppercase tracking-widest font-semibold mt-1">{stat.label}</div>
+                <div className="text-2xl font-bold text-[#1a1a2e] tabular-nums">{stat.value}</div>
+                <div className="text-xs text-muted-foreground uppercase tracking-wide font-medium mt-1">{stat.label}</div>
               </div>
             ))}
           </div>

@@ -50,7 +50,7 @@ export default function VendorSettingsPage() {
           <div className="flex items-center gap-6">
             <div className="w-20 h-20 rounded-xl bg-muted flex items-center justify-center border-2 border-dashed border-border hover:border-[#c9a96e]/50 cursor-pointer relative group">
               <Upload className="h-6 w-6 text-muted-foreground/50 group-hover:text-[#c9a96e]" />
-              <span className="absolute -bottom-5 text-[10px] text-muted-foreground whitespace-nowrap">Store Logo</span>
+              <span className="absolute -bottom-5 text-xs text-muted-foreground whitespace-nowrap">Store Logo</span>
             </div>
             <div className="flex-1 grid grid-cols-2 gap-4">
               <div className="space-y-2">

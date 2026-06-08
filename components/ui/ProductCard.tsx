@@ -91,7 +91,7 @@ export default function ProductCard({ product, view = "grid" }: ProductCardProps
           <div className="absolute bottom-0 inset-x-0 p-2 translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-10">
             <button
               onClick={handleAddToCart}
-              className="w-full py-2 rounded-lg bg-[#1a1a2e] text-white text-[10px] font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 hover:bg-black transition-colors"
+              className="w-full py-2 rounded-lg bg-[#1a1a2e] text-white text-xs font-semibold uppercase tracking-wide flex items-center justify-center gap-1.5 hover:bg-black transition-colors"
             >
               <ShoppingBag className="h-3 w-3" />
               Quick Add
@@ -104,9 +104,9 @@ export default function ProductCard({ product, view = "grid" }: ProductCardProps
           </h4>
           <div className="flex items-center gap-1 mb-2">
             <Star className="h-2.5 w-2.5 fill-[#c9a96e] text-[#c9a96e]" />
-            <span className="text-[10px] font-semibold">{product.rating}</span>
+            <span className="text-xs font-medium">{product.rating}</span>
             {product.reviews && (
-              <span className="text-[10px] text-muted-foreground">({product.reviews})</span>
+              <span className="text-xs text-muted-foreground">({product.reviews})</span>
             )}
           </div>
           <div className="flex items-baseline gap-1.5 mt-auto pt-1 border-t border-muted/40">
@@ -114,7 +114,7 @@ export default function ProductCard({ product, view = "grid" }: ProductCardProps
               {formatPrice(product.salePrice ?? product.price)}
             </span>
             {product.salePrice && (
-              <span className="text-[9px] text-muted-foreground line-through">
+              <span className="text-xs text-muted-foreground line-through">
                 {formatPrice(product.price)}
               </span>
             )}
@@ -137,13 +137,13 @@ export default function ProductCard({ product, view = "grid" }: ProductCardProps
             sizes="112px"
           />
           {discount && (
-            <span className="absolute top-2 left-2 px-1.5 py-0.5 bg-[#c9a96e]/95 text-white text-[8px] font-bold tracking-wider rounded-sm uppercase z-10">
+            <span className="absolute top-2 left-2 px-1.5 py-0.5 bg-[#c9a96e]/95 text-white text-xs font-semibold tracking-wide rounded-sm uppercase z-10">
               {discount}% OFF
             </span>
           )}
         </div>
         <div className="flex-1 flex flex-col">
-          <p className="text-[9px] text-muted-foreground uppercase tracking-widest font-semibold mb-1">
+          <p className="text-xs text-muted-foreground uppercase tracking-wide font-medium mb-1">
             {vendorName}
           </p>
           <Link href={`/shop/${productSlug}`}>
@@ -196,7 +196,7 @@ export default function ProductCard({ product, view = "grid" }: ProductCardProps
               </button>
               <button
                 onClick={handleAddToCart}
-                className="px-3.5 h-8 rounded-lg bg-[#1a1a2e] text-white text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5 hover:bg-black transition-colors"
+                className="px-3.5 h-8 rounded-lg bg-[#1a1a2e] text-white text-xs font-semibold uppercase tracking-wide flex items-center gap-1.5 hover:bg-black transition-colors"
               >
                 <ShoppingBag className="h-3.5 w-3.5" />
                 Add
@@ -223,12 +223,12 @@ export default function ProductCard({ product, view = "grid" }: ProductCardProps
         {/* Badges */}
         <div className="absolute top-2.5 left-2.5 flex flex-col gap-1 z-10">
           {product.isNew && (
-            <span className="px-2 py-0.5 bg-[#1a1a2e] text-white text-[9px] font-bold tracking-wider rounded-sm uppercase">
+            <span className="px-2 py-0.5 bg-[#1a1a2e] text-white text-xs font-semibold tracking-wide rounded-sm uppercase">
               NEW
             </span>
           )}
           {discount && (
-            <span className="px-2 py-0.5 bg-[#c9a96e]/95 text-white text-[9px] font-bold tracking-wider rounded-sm uppercase">
+            <span className="px-2 py-0.5 bg-[#c9a96e]/95 text-white text-xs font-semibold tracking-wide rounded-sm uppercase">
               {discount}% OFF
             </span>
           )}
@@ -246,7 +246,7 @@ export default function ProductCard({ product, view = "grid" }: ProductCardProps
         <div className="absolute bottom-0 inset-x-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-10">
           <button
             onClick={handleAddToCart}
-            className="w-full py-2.5 rounded-lg bg-[#1a1a2e] text-white text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-black transition-colors shadow-md"
+            className="w-full py-2.5 rounded-lg bg-[#1a1a2e] text-white text-xs font-semibold uppercase tracking-wide flex items-center justify-center gap-2 hover:bg-black transition-colors shadow-md"
           >
             <ShoppingBag className="h-3.5 w-3.5" />
             Quick Add
@@ -256,7 +256,7 @@ export default function ProductCard({ product, view = "grid" }: ProductCardProps
 
       {/* Product info */}
       <div className="p-4 flex flex-col flex-grow">
-        <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-semibold mb-1">
+        <p className="text-xs text-muted-foreground uppercase tracking-wide font-medium mb-1">
           {vendorName}
         </p>
         <Link href={`/shop/${productSlug}`} className="flex-grow">
@@ -279,9 +279,9 @@ export default function ProductCard({ product, view = "grid" }: ProductCardProps
               />
             ))}
           </div>
-          <span className="text-[11px] font-semibold text-foreground ml-0.5">{product.rating}</span>
+          <span className="text-xs font-medium text-foreground ml-0.5">{product.rating}</span>
           {product.reviews && (
-            <span className="text-[11px] text-muted-foreground">({product.reviews})</span>
+            <span className="text-xs text-muted-foreground">({product.reviews})</span>
           )}
         </div>
         {/* Price */}

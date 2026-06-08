@@ -67,7 +67,7 @@ export default async function WishlistPage() {
                     sizes="(max-width: 640px) 50vw, 25vw"
                   />
                   {discount && (
-                    <span className="absolute top-3 left-3 px-2 py-0.5 bg-[#c9a96e] text-white text-[10px] font-bold rounded-full">
+                    <span className="absolute top-3 left-3 px-2 py-0.5 bg-[#c9a96e] text-white text-xs font-semibold rounded-full">
                       -{discount}%
                     </span>
                   )}
@@ -84,7 +84,7 @@ export default async function WishlistPage() {
                   </div>
                 </div>
                 <div className="p-3">
-                  <p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-0.5">{item.vendor}</p>
+                  <p className="text-xs text-muted-foreground uppercase tracking-wide mb-0.5">{item.vendor}</p>
                   <Link href={`/shop/${item.slug}`}>
                     <h3 className="font-medium text-sm leading-snug mb-1.5 line-clamp-2 hover:text-[#c9a96e] transition-colors">
                       {item.title}

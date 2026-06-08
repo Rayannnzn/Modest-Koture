@@ -76,7 +76,7 @@ export default function Footer() {
               </div>
               <div>
                 <div className="font-bold text-lg leading-tight">Modest Kouture</div>
-                <div className="text-[#c9a96e] text-xs tracking-widest uppercase">
+                <div className="text-[#c9a96e] text-xs tracking-wide uppercase">
                   Fashion Marketplace
                 </div>
               </div>
@@ -143,7 +143,7 @@ export default function Footer() {
 
         {/* Categories */}
         <div className="mt-10 pt-8 border-t border-white/10">
-          <p className="text-xs text-white/40 uppercase tracking-wider mb-3">Shop by Category</p>
+          <p className="text-xs text-white/40 uppercase tracking-wide mb-3">Shop by Category</p>
           <div className="flex flex-wrap gap-2">
             {categories.map((cat) => (
               <Link

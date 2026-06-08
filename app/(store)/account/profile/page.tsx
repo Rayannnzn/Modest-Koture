@@ -55,7 +55,7 @@ export default function ProfilePage() {
             ].map((stat) => (
               <div key={stat.label}>
                 <div className="font-bold text-[#c9a96e]">{stat.value}</div>
-                <div className="text-[10px] text-muted-foreground">{stat.label}</div>
+                <div className="text-xs text-muted-foreground">{stat.label}</div>
               </div>
             ))}
           </div>

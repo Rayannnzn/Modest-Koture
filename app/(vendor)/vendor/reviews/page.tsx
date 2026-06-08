@@ -62,7 +62,7 @@ export default function VendorReviewsPage() {
                       <Star key={i} className={`h-3.5 w-3.5 ${i < review.rating ? "fill-[#c9a96e] text-[#c9a96e]" : "text-gray-300"}`} />
                     ))}
                   </div>
-                  {review.verified && <span className="text-[10px] text-green-600 font-medium">✓ Verified</span>}
+                  {review.verified && <span className="text-xs text-green-600 font-medium">✓ Verified</span>}
                 </div>
               </div>
               <span className="text-xs text-muted-foreground">{review.date}</span>

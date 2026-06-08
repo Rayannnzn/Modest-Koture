@@ -112,7 +112,7 @@ export default function FeaturedVendors() {
                   <h3 className="font-serif font-bold text-base text-foreground group-hover:text-[#c9a96e] transition-colors leading-tight mb-0.5">
                     {vendor.name}
                   </h3>
-                  <p className="text-[10px] text-[#c9a96e] uppercase tracking-widest font-bold mb-2">
+                  <p className="text-xs text-[#c9a96e] uppercase tracking-wide font-medium mb-2">
                     {vendor.category}
                   </p>
                   <p className="text-xs text-muted-foreground mb-4 line-clamp-2 leading-relaxed">
@@ -154,7 +154,7 @@ export default function FeaturedVendors() {
           <p className="text-white/70 text-sm md:text-base mb-6 max-w-lg mx-auto leading-relaxed">
             Join 500+ premium modest designers on Modest Kouture and connect with customers globally.
           </p>
-          <Button asChild variant="gold" size="lg" className="uppercase text-xs tracking-widest font-bold px-8 shadow-lg">
+          <Button asChild variant="gold" size="lg" className="uppercase text-xs tracking-wide font-semibold px-8 shadow-lg">
             <Link href="/become-a-seller" className="gap-2">
               Start Selling Today
               <ArrowRight className="h-4 w-4" />

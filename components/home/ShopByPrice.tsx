@@ -45,11 +45,11 @@ export default function ShopByPrice() {
             <span className="w-10 h-10 rounded-full bg-[#f8f5f0] text-[#c9a96e] flex items-center justify-center mb-4 group-hover:bg-[#1a1a2e] group-hover:text-white transition-colors duration-300">
               $
             </span>
-            <span className="text-2xl font-bold font-serif text-[#1a1a2e]">
+            <span className="text-2xl font-bold text-[#1a1a2e] tabular-nums">
               {range.label}
             </span>
-            <span className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold mt-1.5">{range.desc}</span>
-            <div className="flex items-center gap-1 mt-5 text-[10px] font-bold uppercase tracking-wider text-[#c9a96e] group-hover:text-[#b8985d] transition-colors">
+            <span className="text-xs text-muted-foreground uppercase tracking-wide font-medium mt-1.5">{range.desc}</span>
+            <div className="flex items-center gap-1 mt-5 text-xs font-medium uppercase tracking-wide text-[#c9a96e] group-hover:text-[#b8985d] transition-colors">
               <span>Explore Now</span>
               <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
             </div>

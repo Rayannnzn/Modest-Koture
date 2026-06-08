@@ -213,7 +213,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               <div key={label} className="flex flex-col items-center text-center p-3 bg-muted/50 rounded-xl">
                 <Icon className="h-5 w-5 text-[#c9a96e] mb-1.5" />
                 <p className="text-xs font-semibold">{label}</p>
-                <p className="text-[10px] text-muted-foreground">{sub}</p>
+                <p className="text-xs text-muted-foreground">{sub}</p>
               </div>
             ))}
           </div>
@@ -299,7 +299,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                             <Star key={i} className={`h-3 w-3 ${i < review.rating ? "fill-[#c9a96e] text-[#c9a96e]" : "text-gray-300"}`} />
                           ))}
                         </div>
-                        {review.verified && <span className="text-[10px] text-green-600 font-medium">✓ Verified Purchase</span>}
+                        {review.verified && <span className="text-xs text-green-600 font-medium">✓ Verified Purchase</span>}
                       </div>
                     </div>
                     <span className="text-xs text-muted-foreground">{review.date}</span>

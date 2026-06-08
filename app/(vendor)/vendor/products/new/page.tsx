@@ -162,7 +162,7 @@ export default function NewProductPage() {
                   >
                     <input type="file" className="hidden" accept="image/*" />
                     <Upload className="h-6 w-6 text-muted-foreground/50" />
-                    <span className="text-[10px] text-muted-foreground text-center px-2">
+                    <span className="text-xs text-muted-foreground text-center px-2">
                       {i === 0 ? "Main Photo" : `Photo ${i + 1}`}
                     </span>
                   </label>

@@ -138,12 +138,12 @@ function ProductCard({ product }: { product: typeof trendingProducts[0] }) {
         {/* Badges */}
         <div className="absolute top-2.5 left-2.5 flex flex-col gap-1 z-10">
           {product.isNew && (
-            <span className="px-2 py-0.5 bg-[#1a1a2e] text-white text-[9px] font-bold tracking-wider rounded-sm uppercase">
+            <span className="px-2 py-0.5 bg-[#1a1a2e] text-white text-xs font-semibold tracking-wide rounded-sm uppercase">
               NEW
             </span>
           )}
           {discount && (
-            <span className="px-2 py-0.5 bg-[#c9a96e]/95 text-white text-[9px] font-bold tracking-wider rounded-sm uppercase">
+            <span className="px-2 py-0.5 bg-[#c9a96e]/95 text-white text-xs font-semibold tracking-wide rounded-sm uppercase">
               {discount}% OFF
             </span>
           )}
@@ -161,7 +161,7 @@ function ProductCard({ product }: { product: typeof trendingProducts[0] }) {
         <div className="absolute bottom-0 inset-x-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-10">
           <button
             onClick={handleQuickAdd}
-            className="w-full py-2.5 rounded-lg bg-[#1a1a2e] text-white text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-black transition-colors shadow-md"
+            className="w-full py-2.5 rounded-lg bg-[#1a1a2e] text-white text-xs font-semibold uppercase tracking-wide flex items-center justify-center gap-2 hover:bg-black transition-colors shadow-md"
           >
             <ShoppingBag className="h-3.5 w-3.5" />
             Quick Add
@@ -171,7 +171,7 @@ function ProductCard({ product }: { product: typeof trendingProducts[0] }) {
 
       {/* Product info */}
       <div className="p-4 flex flex-col flex-1">
-        <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-semibold mb-1">
+        <p className="text-xs text-muted-foreground uppercase tracking-wide font-medium mb-1">
           {product.vendor}
         </p>
         <Link href={`/shop/${product.slug}`} className="flex-1">
@@ -194,8 +194,8 @@ function ProductCard({ product }: { product: typeof trendingProducts[0] }) {
               />
             ))}
           </div>
-          <span className="text-[11px] font-semibold text-foreground ml-0.5">{product.rating}</span>
-          <span className="text-[11px] text-muted-foreground">({product.reviews})</span>
+          <span className="text-xs font-medium text-foreground ml-0.5">{product.rating}</span>
+          <span className="text-xs text-muted-foreground">({product.reviews})</span>
         </div>
         {/* Price */}
         <div className="flex items-baseline gap-2 mt-auto pt-1.5 border-t border-muted/50">

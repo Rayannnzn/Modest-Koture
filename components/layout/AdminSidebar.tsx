@@ -44,7 +44,7 @@ export default function AdminSidebar() {
           </div>
           <div>
             <div className="text-white font-bold text-sm">Admin Panel</div>
-            <div className="text-indigo-400 text-[10px] tracking-widest">MODEST KOUTURE</div>
+            <div className="text-indigo-400 text-xs tracking-wide uppercase">MODEST KOUTURE</div>
           </div>
         </Link>
       </div>

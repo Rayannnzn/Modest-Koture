@@ -114,7 +114,7 @@ function MiniProductCard({ product, showcaseCategory, showcaseSlug }: MiniProduc
         <div className="absolute bottom-0 inset-x-0 p-2 translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-10">
           <button
             onClick={handleAddToCart}
-            className="w-full py-2 rounded-lg bg-[#1a1a2e] text-white text-[10px] uppercase font-bold tracking-wider flex items-center justify-center gap-1.5 hover:bg-black transition-colors"
+            className="w-full py-2 rounded-lg bg-[#1a1a2e] text-white text-xs uppercase font-semibold tracking-wide flex items-center justify-center gap-1.5 hover:bg-black transition-colors"
           >
             <ShoppingBag className="h-3 w-3" />
             Quick Add
@@ -127,15 +127,15 @@ function MiniProductCard({ product, showcaseCategory, showcaseSlug }: MiniProduc
         </h4>
         <div className="flex items-center gap-1 mb-2">
           <Star className="h-2.5 w-2.5 fill-[#c9a96e] text-[#c9a96e]" />
-          <span className="text-[10px] font-semibold">{product.rating}</span>
-          <span className="text-[10px] text-muted-foreground">({product.reviews})</span>
+          <span className="text-xs font-medium">{product.rating}</span>
+          <span className="text-xs text-muted-foreground">({product.reviews})</span>
         </div>
         <div className="flex items-baseline gap-1.5 mt-auto pt-1 border-t border-muted/50">
           <span className="text-xs font-bold text-foreground">
             {formatPrice(product.salePrice ?? product.price)}
           </span>
           {product.salePrice && (
-            <span className="text-[9px] text-muted-foreground line-through">
+            <span className="text-xs text-muted-foreground line-through">
               {formatPrice(product.price)}
             </span>
           )}
@@ -172,12 +172,12 @@ export default function CategoryShowcase() {
                 />
                 <div className={cn("absolute inset-0 bg-gradient-to-br", showcase.bannerBg)} />
                 <div className="absolute inset-0 p-8 flex flex-col justify-end text-white">
-                  <span className="text-[10px] font-bold text-[#c9a96e] uppercase tracking-widest mb-1.5">
+                  <span className="text-xs font-medium text-[#c9a96e] uppercase tracking-wide mb-1.5">
                     {showcase.tagline}
                   </span>
                   <h2 className="text-3xl font-bold font-serif mb-2">{showcase.category}</h2>
                   <p className="text-sm text-white/80 mb-6 max-w-sm leading-relaxed">{showcase.description}</p>
-                  <Button asChild variant="gold" size="sm" className="w-fit gap-1.5 uppercase text-xs tracking-wider font-semibold">
+                  <Button asChild variant="gold" size="sm" className="w-fit gap-1.5 uppercase text-xs tracking-wide font-medium">
                     <Link href={`/category/${showcase.slug}`}>
                       Shop Collection
                       <ArrowRight className="h-3.5 w-3.5" />

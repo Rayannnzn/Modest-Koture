@@ -131,7 +131,7 @@ export default function CartPage() {
                 <div className="flex-1">
                   <div className="flex justify-between items-start gap-2">
                     <div>
-                      <p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-0.5">{item.vendor}</p>
+                      <p className="text-xs text-muted-foreground uppercase tracking-wide mb-0.5">{item.vendor}</p>
                       <Link href={`/shop/${item.slug}`}>
                         <h3 className="font-semibold hover:text-[#c9a96e] transition-colors">{item.title}</h3>
                       </Link>
@@ -254,7 +254,7 @@ export default function CartPage() {
                 ].map(({ Icon, label }) => (
                   <div key={label} className="flex flex-col items-center gap-1 p-2 bg-muted/40 rounded-xl">
                     <Icon className="h-4 w-4 text-[#c9a96e]" />
-                    <span className="text-[10px] text-muted-foreground text-center">{label}</span>
+                    <span className="text-xs text-muted-foreground text-center">{label}</span>
                   </div>
                 ))}
               </div>
