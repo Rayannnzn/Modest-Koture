@@ -1,26 +1,17 @@
 import Link from "next/link";
-import {
-  ArrowRight,
-  Shirt,
-  Baby,
-  Smartphone,
-  PawPrint,
-  Crown,
-  Sparkles,
-  Gem,
-  User,
-} from "lucide-react";
+import { ArrowRight, Store } from "lucide-react";
+import { CategoryIconsMap } from "@/components/ui/custom-icons";
 
 const categories = [
-  { name: "Women", slug: "women", icon: Shirt, count: "2.1K items" },
-  { name: "Men", slug: "men", icon: Shirt, count: "890 items" },
-  { name: "Children", slug: "children", icon: Baby, count: "540 items" },
-  { name: "Electronics", slug: "electronics", icon: Smartphone, count: "320 items" },
-  { name: "Pets", slug: "pets", icon: PawPrint, count: "180 items" },
-  { name: "Luxury", slug: "luxury", icon: Crown, count: "640 items" },
-  { name: "Beauty", slug: "beauty", icon: Sparkles, count: "730 items" },
-  { name: "Jewelry", slug: "jewelry", icon: Gem, count: "410 items" },
-  { name: "Plus Size", slug: "plus-size", icon: User, count: "270 items" },
+  { name: "Women", slug: "women", count: "2.1K items" },
+  { name: "Men", slug: "men", count: "890 items" },
+  { name: "Children", slug: "children", count: "540 items" },
+  { name: "Electronics", slug: "electronics", count: "320 items" },
+  { name: "Pets", slug: "pets", count: "180 items" },
+  { name: "Luxury", slug: "luxury", count: "640 items" },
+  { name: "Beauty", slug: "beauty", count: "730 items" },
+  { name: "Jewelry", slug: "jewelry", count: "410 items" },
+  { name: "Plus Size", slug: "plus-size", count: "270 items" },
 ];
 
 export default function CategoryGrid() {
@@ -46,7 +37,7 @@ export default function CategoryGrid() {
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-9 gap-4">
         {categories.map((cat) => {
-          const Icon = cat.icon;
+          const Icon = CategoryIconsMap[cat.slug] || Store;
           return (
             <Link
               key={cat.slug}

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Star, Heart, ShoppingBag } from "lucide-react";
+import { ArrowRight, Star, Heart, ShoppingBag, Flame } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/utils";
 import { useWishlistStore } from "@/store/wishlistStore";
@@ -219,6 +219,7 @@ export default function TrendingProducts() {
       <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
+            <Flame className="h-6 w-6 text-[#c9a96e]" />
             <h2 className="text-3xl font-bold font-serif text-foreground tracking-tight">
               Trending Now
             </h2>

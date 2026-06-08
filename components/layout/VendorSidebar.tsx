@@ -8,7 +8,7 @@ import {
   LayoutDashboard,
   Package,
   ShoppingBag,
-  BarChart2,
+  BarChart3,
   Star,
   Wallet,
   Megaphone,
@@ -16,7 +16,7 @@ import {
   LogOut,
   ChevronRight,
   Store,
-  X,
+  ExternalLink,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -25,7 +25,7 @@ const navItems = [
   { label: "Dashboard", href: "/vendor/dashboard", icon: LayoutDashboard },
   { label: "Products", href: "/vendor/products", icon: Package },
   { label: "Orders", href: "/vendor/orders", icon: ShoppingBag },
-  { label: "Reports", href: "/vendor/reports", icon: BarChart2 },
+  { label: "Reports", href: "/vendor/reports", icon: BarChart3 },
   { label: "Reviews", href: "/vendor/reviews", icon: Star },
   { label: "Withdrawals", href: "/vendor/withdrawals", icon: Wallet },
   { label: "Announcements", href: "/vendor/announcements", icon: Megaphone },
@@ -89,7 +89,7 @@ export default function VendorSidebar() {
       {/* Bottom actions */}
       <div className="p-4 border-t border-white/10">
         <Link href="/" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-white/60 hover:text-white hover:bg-white/10 transition-colors mb-1">
-          <Store className="h-4 w-4" />
+          <ExternalLink className="h-4 w-4" />
           View Storefront
         </Link>
         <button

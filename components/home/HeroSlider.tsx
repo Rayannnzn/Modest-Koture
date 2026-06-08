@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ArrowRight, Store, Gem, PackageCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -136,13 +136,16 @@ export default function HeroSlider() {
               {/* Stats */}
               <div className="flex gap-8 mt-10 pt-8 border-t border-white/10">
                 {[
-                  { value: "500+", label: "Premium Brands" },
-                  { value: "10K+", label: "Vetted Pieces" },
-                  { value: "50K+", label: "Orders Shipped" },
+                  { value: "500+", label: "Premium Brands", icon: Store },
+                  { value: "10K+", label: "Vetted Pieces", icon: Gem },
+                  { value: "50K+", label: "Orders Shipped", icon: PackageCheck },
                 ].map((stat) => (
                   <div key={stat.label}>
-                    <div className="text-2xl font-bold tabular-nums" style={{ color: slide.accentColor }}>
-                      {stat.value}
+                    <div className="flex items-center gap-1.5">
+                      <stat.icon className="h-4 w-4 opacity-70" style={{ color: slide.accentColor }} />
+                      <div className="text-2xl font-bold tabular-nums" style={{ color: slide.accentColor }}>
+                        {stat.value}
+                      </div>
                     </div>
                     <div className="text-xs text-white/50 uppercase tracking-wide font-medium mt-0.5">{stat.label}</div>
                   </div>

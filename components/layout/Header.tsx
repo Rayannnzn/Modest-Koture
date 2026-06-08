@@ -5,39 +5,27 @@ import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import {
-  Search,
-  Heart,
-  ShoppingBag,
-  User,
-  Menu,
-  X,
-  ChevronDown,
-  Store,
   LogOut,
   Package,
   MapPin,
   Settings,
   LayoutDashboard,
-  Shirt,
-  Baby,
-  Smartphone,
-  PawPrint,
-  Crown,
+  Flame,
   Sparkles,
-  Gem,
 } from "lucide-react";
+import {
+  NavSearchIcon,
+  NavHeartIcon,
+  NavCartIcon,
+  NavUserIcon,
+  NavStoreIcon,
+  NavMenuIcon,
+  NavCloseIcon,
+  NavChevronDownIcon,
+  CategoryIconsMap,
+} from "@/components/ui/custom-icons";
 
-const categoryIcons: Record<string, React.ComponentType<{ className?: string }>> = {
-  women: Shirt,
-  men: Shirt,
-  children: Baby,
-  electronics: Smartphone,
-  pets: PawPrint,
-  luxury: Crown,
-  beauty: Sparkles,
-  jewelry: Gem,
-  "plus-size": User,
-};
+const categoryIcons = CategoryIconsMap;
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -98,9 +86,12 @@ export default function Header() {
     <>
       {/* Announcement bar */}
       <div className="bg-[#1a1a2e] text-white text-xs py-2 text-center px-4">
-        <span>✨ Free shipping on orders over $75 · Use code </span>
-        <span className="font-semibold text-[#c9a96e]">WELCOME15</span>
-        <span> for 15% off your first order</span>
+        <span className="inline-flex items-center gap-1.5">
+          <Sparkles className="h-3 w-3 text-[#c9a96e]" />
+          Free shipping on orders over $75 · Use code{" "}
+          <span className="font-semibold text-[#c9a96e]">WELCOME15</span>
+          {" "}for 15% off your first order
+        </span>
       </div>
 
       <header
@@ -111,17 +102,17 @@ export default function Header() {
       >
         {/* Main header */}
         <div className="container mx-auto px-4 lg:px-6">
-          <div className="flex h-16 md:h-20 items-center gap-4">
+          <div className="flex h-20 md:h-24 items-center gap-5">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2.5 flex-shrink-0 group">
-              <div className="w-9 h-9 md:w-11 md:h-11 rounded-xl bg-[#1a1a2e] flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
-                <span className="text-[#c9a96e] font-bold text-lg md:text-xl">M</span>
+              <div className="w-11 h-11 md:w-13 md:h-13 rounded-xl bg-[#1a1a2e] flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+                <span className="text-[#c9a96e] font-bold text-xl md:text-2xl">M</span>
               </div>
               <div className="hidden sm:block">
-                <div className="font-bold text-[#1a1a2e] text-lg md:text-xl leading-tight tracking-tight">
+                <div className="font-bold text-[#1a1a2e] text-xl md:text-2xl leading-tight tracking-tight">
                   Modest
                 </div>
-                <div className="text-[#c9a96e] text-xs font-semibold tracking-wide uppercase -mt-0.5 md:-mt-1">
+                <div className="text-[#c9a96e] text-xs md:text-sm font-semibold tracking-wide uppercase -mt-0.5 md:-mt-1">
                   Kouture
                 </div>
               </div>
@@ -133,13 +124,13 @@ export default function Header() {
               className="flex-1 max-w-xl hidden md:flex"
             >
               <div className="relative w-full">
-                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <NavSearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                 <input
                   type="search"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search for dresses, abayas, hijabs..."
-                  className="w-full pl-11 pr-4 py-2.5 md:py-3 text-sm md:text-base rounded-xl md:rounded-2xl border border-input bg-muted/50 hover:bg-muted transition-colors focus:outline-none focus:ring-2 focus:ring-[#c9a96e]/50 focus:border-[#c9a96e] focus:bg-white"
+                  className="w-full pl-13 pr-4 py-3 md:py-3.5 text-sm md:text-base rounded-xl md:rounded-2xl border border-input bg-muted/50 hover:bg-muted transition-colors focus:outline-none focus:ring-2 focus:ring-[#c9a96e]/50 focus:border-[#c9a96e] focus:bg-white"
                 />
               </div>
             </form>
@@ -148,16 +139,16 @@ export default function Header() {
             <div className="flex items-center gap-1 ml-auto">
               {/* Become a seller */}
               <Link href="/become-a-seller" className="hidden lg:block">
-                <Button variant="gold-outline" className="gap-1.5 h-10 md:h-11 px-4 md:px-5">
-                  <Store className="h-4 w-4" />
+                <Button variant="gold-outline" className="gap-2 h-11 md:h-13 px-4.5 md:px-6 text-sm md:text-base">
+                  <NavStoreIcon className="h-5 w-5" />
                   Sell on MK
                 </Button>
               </Link>
 
               {/* Wishlist */}
               <Link href="/account/wishlist">
-                <Button variant="ghost" size="icon" className="relative h-10 w-10 md:h-11 md:w-11">
-                  <Heart className="h-5 w-5" />
+                <Button variant="ghost" size="icon" className="relative h-11 w-11 md:h-13 md:w-13">
+                  <NavHeartIcon className="h-6 w-6" />
                   <span className="sr-only">Wishlist</span>
                 </Button>
               </Link>
@@ -166,13 +157,13 @@ export default function Header() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="relative h-10 w-10 md:h-11 md:w-11"
+                className="relative h-11 w-11 md:h-13 md:w-13"
                 onClick={toggleCart}
                 aria-label="Open cart"
               >
-                <ShoppingBag className="h-5 w-5" />
+                <NavCartIcon className="h-6 w-6" />
                 {count > 0 && (
-                  <span className="absolute -top-1 -right-1 h-4.5 w-4.5 rounded-full bg-[#c9a96e] text-white text-xs font-semibold flex items-center justify-center min-w-[18px] px-1">
+                  <span className="absolute -top-1 -right-1 h-5.5 w-5.5 rounded-full bg-[#c9a96e] text-white text-[10px] md:text-xs font-semibold flex items-center justify-center min-w-[20px] px-1">
                     {count > 99 ? "99+" : count}
                   </span>
                 )}
@@ -182,8 +173,8 @@ export default function Header() {
               {session ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="rounded-full ml-1 h-9 w-9 md:h-11 md:w-11 p-0 flex items-center justify-center">
-                      <Avatar className="h-8 w-8 md:h-10 md:w-10">
+                    <Button variant="ghost" className="rounded-full ml-1 h-11 w-11 md:h-13 md:w-13 p-0 flex items-center justify-center">
+                      <Avatar className="h-9.5 w-9.5 md:h-11.5 md:w-11.5">
                         <AvatarImage src={session.user?.image ?? ""} alt={session.user?.name ?? ""} />
                         <AvatarFallback className="bg-[#1a1a2e] text-[#c9a96e] text-xs font-bold">
                           {getInitials(session.user?.name ?? "U")}
@@ -211,7 +202,7 @@ export default function Header() {
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
                       <Link href="/account/wishlist" className="cursor-pointer">
-                        <Heart className="h-4 w-4" />
+                        <NavHeartIcon className="h-4 w-4" />
                         Wishlist
                       </Link>
                     </DropdownMenuItem>
@@ -226,7 +217,7 @@ export default function Header() {
                         <DropdownMenuSeparator />
                         <DropdownMenuItem asChild>
                           <Link href="/vendor/dashboard" className="cursor-pointer">
-                            <Store className="h-4 w-4" />
+                            <NavStoreIcon className="h-4 w-4" />
                             Vendor Dashboard
                           </Link>
                         </DropdownMenuItem>
@@ -267,10 +258,10 @@ export default function Header() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="md:hidden ml-1"
+                className="md:hidden ml-1 h-11 w-11"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               >
-                {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                {isMobileMenuOpen ? <NavCloseIcon className="h-6 w-6" /> : <NavMenuIcon className="h-6 w-6" />}
               </Button>
             </div>
           </div>
@@ -287,16 +278,16 @@ export default function Header() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="gap-1.5 text-white bg-[#1a1a2e] hover:bg-[#1a1a2e]/90 rounded-lg h-8 px-3"
+                        className="gap-2 text-white bg-[#1a1a2e] hover:bg-[#1a1a2e]/90 rounded-lg h-9 px-3.5 text-sm font-medium"
                       >
-                        <Menu className="h-4 w-4" />
+                        <NavMenuIcon className="h-4.5 w-4.5" />
                         All Categories
-                        <ChevronDown className="h-3 w-3" />
+                        <NavChevronDownIcon className="h-3.5 w-3.5" />
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="start" className="w-56">
                       {categories.map((cat) => {
-                        const Icon = categoryIcons[cat.slug] || Store;
+                        const Icon = categoryIcons[cat.slug] || NavStoreIcon;
                         return (
                           <DropdownMenuItem key={cat.slug} asChild>
                             <Link href={`/category/${cat.slug}`} className="cursor-pointer gap-2">
@@ -310,14 +301,14 @@ export default function Header() {
                   </DropdownMenu>
                 </li>
                 {categories.slice(0, 7).map((cat) => {
-                  const Icon = categoryIcons[cat.slug] || Store;
+                  const Icon = categoryIcons[cat.slug] || NavStoreIcon;
                   return (
                     <li key={cat.slug}>
                       <Link
                         href={`/category/${cat.slug}`}
-                        className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-foreground/80 hover:text-foreground hover:bg-muted rounded-lg transition-colors whitespace-nowrap"
+                        className="flex items-center gap-2 px-3.5 py-2 text-sm font-medium text-foreground/80 hover:text-foreground hover:bg-muted rounded-lg transition-colors whitespace-nowrap"
                       >
-                        <Icon className="h-3.5 w-3.5 text-muted-foreground" />
+                        <Icon className="h-4.5 w-4.5 text-muted-foreground" />
                         {cat.name}
                       </Link>
                     </li>
@@ -326,8 +317,9 @@ export default function Header() {
                 <li className="ml-auto flex-shrink-0">
                   <Link
                     href="/shop?sort=popular"
-                    className="flex items-center gap-1 px-3 py-1.5 text-sm text-[#c9a96e] font-medium hover:text-[#b8985d] transition-colors"
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-[#c9a96e] font-medium hover:text-[#b8985d] transition-colors"
                   >
+                    <Flame className="h-3.5 w-3.5" />
                     Trending
                   </Link>
                 </li>
@@ -343,7 +335,7 @@ export default function Header() {
             <div className="p-4">
               <form onSubmit={handleSearch}>
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <NavSearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <input
                     type="search"
                     value={searchQuery}
@@ -372,7 +364,7 @@ export default function Header() {
               </p>
               <div className="grid grid-cols-3 gap-1 p-3">
                 {categories.map((cat) => {
-                  const Icon = categoryIcons[cat.slug] || Store;
+                  const Icon = categoryIcons[cat.slug] || NavStoreIcon;
                   return (
                     <Link
                       key={cat.slug}
@@ -393,7 +385,7 @@ export default function Header() {
             <div className="p-4 border-t border-border">
               <Link href="/become-a-seller" onClick={() => setIsMobileMenuOpen(false)}>
                 <Button variant="gold" className="w-full gap-2">
-                  <Store className="h-4 w-4" />
+                  <NavStoreIcon className="h-4 w-4" />
                   Sell on Modest Kouture
                 </Button>
               </Link>

@@ -8,10 +8,12 @@ import {
   TrendingUp,
   ArrowUpRight,
   Clock,
-  CheckCircle2,
-  XCircle,
-  AlertCircle,
+  CircleCheck,
+  CircleX,
+  CircleAlert,
   ExternalLink,
+  Download,
+  Banknote,
 } from "lucide-react";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -34,11 +36,11 @@ const pendingVendors = [
 ];
 
 const recentActivity = [
-  { type: "vendor_approved", text: "Vendor 'Luxe Modest' was approved", time: "10 min ago", icon: CheckCircle2, color: "text-green-600" },
-  { type: "order_refund", text: "Refund requested on order ORD-7821", time: "25 min ago", icon: AlertCircle, color: "text-amber-600" },
-  { type: "product_flagged", text: "Product flagged for review: 'Silk Dress XL'", time: "1h ago", icon: XCircle, color: "text-red-600" },
-  { type: "withdrawal", text: "Withdrawal request $450 from Zara Modest", time: "2h ago", icon: DollarSign, color: "text-blue-600" },
-  { type: "vendor_approved", text: "Vendor 'Pearl & Gold' was approved", time: "3h ago", icon: CheckCircle2, color: "text-green-600" },
+  { type: "vendor_approved", text: "Vendor 'Luxe Modest' was approved", time: "10 min ago", icon: CircleCheck, color: "text-green-600" },
+  { type: "order_refund", text: "Refund requested on order ORD-7821", time: "25 min ago", icon: CircleAlert, color: "text-amber-600" },
+  { type: "product_flagged", text: "Product flagged for review: 'Silk Dress XL'", time: "1h ago", icon: CircleX, color: "text-red-600" },
+  { type: "withdrawal", text: "Withdrawal request $450 from Zara Modest", time: "2h ago", icon: Banknote, color: "text-blue-600" },
+  { type: "vendor_approved", text: "Vendor 'Pearl & Gold' was approved", time: "3h ago", icon: CircleCheck, color: "text-green-600" },
 ];
 
 export default function AdminDashboardPage() {
@@ -50,7 +52,7 @@ export default function AdminDashboardPage() {
           <p className="text-muted-foreground text-sm mt-0.5">Platform overview and management</p>
         </div>
         <Button variant="outline" size="sm" className="gap-1.5">
-          <TrendingUp className="h-4 w-4" />
+          <Download className="h-4 w-4" />
           Export Report
         </Button>
       </div>
@@ -139,7 +141,7 @@ export default function AdminDashboardPage() {
           { label: "Manage Users", href: "/admin/users", icon: Users, count: "12,480" },
           { label: "Review Products", href: "/admin/products", icon: Package, count: "4,820" },
           { label: "Pending Orders", href: "/admin/orders", icon: ShoppingBag, count: "185" },
-          { label: "Withdrawals", href: "/admin/withdrawals", icon: DollarSign, count: "$2,840" },
+          { label: "Withdrawals", href: "/admin/withdrawals", icon: Banknote, count: "$2,840" },
         ].map((item) => (
           <Link
             key={item.href}

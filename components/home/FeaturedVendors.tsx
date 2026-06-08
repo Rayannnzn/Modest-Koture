@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Star, Package, ChevronRight } from "lucide-react";
+import { ArrowRight, Star, Package, ChevronRight, BadgeCheck, Rocket } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const vendors = [
@@ -56,9 +56,12 @@ export default function FeaturedVendors() {
       <div className="container mx-auto px-4 lg:px-6">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
           <div>
-            <h2 className="text-3xl font-bold font-serif text-foreground tracking-tight">
-              Featured Vendors
-            </h2>
+            <div className="flex items-center gap-2">
+              <BadgeCheck className="h-6 w-6 text-[#c9a96e]" />
+              <h2 className="text-3xl font-bold font-serif text-foreground tracking-tight">
+                Featured Vendors
+              </h2>
+            </div>
             <p className="text-muted-foreground text-sm mt-1">
               Shop from our top-rated independent modest wear designers
             </p>
@@ -156,6 +159,7 @@ export default function FeaturedVendors() {
           </p>
           <Button asChild variant="gold" size="lg" className="uppercase text-xs tracking-wide font-semibold px-8 shadow-lg">
             <Link href="/become-a-seller" className="gap-2">
+              <Rocket className="h-4 w-4" />
               Start Selling Today
               <ArrowRight className="h-4 w-4" />
             </Link>

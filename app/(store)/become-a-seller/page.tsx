@@ -12,6 +12,14 @@ import {
   Users,
   Star,
   Zap,
+  UserCheck,
+  LayoutGrid,
+  SmilePlus,
+  ThumbsUp,
+  UserPlus,
+  PenTool,
+  PackagePlus,
+  Rocket,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -57,31 +65,35 @@ const benefits = [
 const steps = [
   {
     step: "01",
+    icon: UserPlus,
     title: "Create Your Account",
     description: "Sign up for free and verify your business details.",
   },
   {
     step: "02",
+    icon: PenTool,
     title: "Set Up Your Store",
     description: "Customize your storefront, upload your logo, and write your brand story.",
   },
   {
     step: "03",
+    icon: PackagePlus,
     title: "List Your Products",
     description: "Add products with photos, descriptions, and pricing in minutes.",
   },
   {
     step: "04",
+    icon: Rocket,
     title: "Start Selling",
     description: "Go live and start receiving orders from our customer base.",
   },
 ];
 
 const stats = [
-  { value: "500+", label: "Active Vendors" },
-  { value: "50K+", label: "Products Listed" },
-  { value: "2M+", label: "Happy Customers" },
-  { value: "98%", label: "Seller Satisfaction" },
+  { value: "500+", label: "Active Vendors", icon: UserCheck },
+  { value: "50K+", label: "Products Listed", icon: LayoutGrid },
+  { value: "2M+", label: "Happy Customers", icon: SmilePlus },
+  { value: "98%", label: "Seller Satisfaction", icon: ThumbsUp },
 ];
 
 const plans = [
@@ -193,7 +205,10 @@ export default function BecomeASellerPage() {
         <div className="container mx-auto px-4 lg:px-6 py-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {stats.map((stat) => (
-              <div key={stat.label} className="text-center">
+              <div key={stat.label} className="text-center group">
+                <div className="w-12 h-12 rounded-2xl bg-[#1a1a2e]/5 flex items-center justify-center mx-auto mb-3 group-hover:bg-[#c9a96e]/10 transition-colors">
+                  <stat.icon className="h-5 w-5 text-[#c9a96e]" />
+                </div>
                 <div className="text-3xl font-bold text-[#1a1a2e]">{stat.value}</div>
                 <div className="text-sm text-muted-foreground mt-1">{stat.label}</div>
               </div>
@@ -240,8 +255,9 @@ export default function BecomeASellerPage() {
                   <div className="hidden lg:block absolute top-8 left-full w-full h-px bg-gradient-to-r from-[#c9a96e]/50 to-transparent z-0" />
                 )}
                 <div className="relative z-10 flex flex-col items-center text-center">
-                  <div className="w-16 h-16 rounded-2xl bg-[#1a1a2e] text-white flex items-center justify-center text-xl font-bold mb-4 shadow-lg">
-                    {step.step}
+                  <div className="w-16 h-16 rounded-2xl bg-[#1a1a2e] text-white flex flex-col items-center justify-center mb-4 shadow-lg gap-0.5">
+                    <step.icon className="h-6 w-6 text-[#c9a96e]" />
+                    <span className="text-[10px] font-bold text-white/40 tracking-widest">{step.step}</span>
                   </div>
                   <h3 className="font-bold mb-2">{step.title}</h3>
                   <p className="text-sm text-muted-foreground">{step.description}</p>

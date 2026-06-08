@@ -3,14 +3,15 @@ import { redirect } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
-  Package,
-  Heart,
-  MapPin,
-  User,
+  Truck,
+  Bookmark,
+  Navigation,
+  CircleUser,
   ChevronRight,
   ShoppingBag,
   Star,
   TrendingUp,
+  Waves,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -18,10 +19,10 @@ import { Button } from "@/components/ui/button";
 export const metadata: Metadata = { title: "My Account" };
 
 const quickLinks = [
-  { label: "My Orders", href: "/account/orders", icon: Package, desc: "Track and manage orders", count: "12 orders" },
-  { label: "Wishlist", href: "/account/wishlist", icon: Heart, desc: "Saved products", count: "8 items" },
-  { label: "Addresses", href: "/account/addresses", icon: MapPin, desc: "Shipping & billing", count: "2 addresses" },
-  { label: "Profile", href: "/account/profile", icon: User, desc: "Personal information", count: null },
+  { label: "My Orders", href: "/account/orders", icon: Truck, desc: "Track and manage orders", count: "12 orders" },
+  { label: "Wishlist", href: "/account/wishlist", icon: Bookmark, desc: "Saved products", count: "8 items" },
+  { label: "Addresses", href: "/account/addresses", icon: Navigation, desc: "Shipping & billing", count: "2 addresses" },
+  { label: "Profile", href: "/account/profile", icon: CircleUser, desc: "Personal information", count: null },
 ];
 
 export default async function AccountDashboardPage() {
@@ -33,19 +34,25 @@ export default async function AccountDashboardPage() {
       {/* Welcome */}
       <div className="bg-gradient-to-r from-[#1a1a2e] to-[#16213e] rounded-2xl p-6 text-white">
         <p className="text-white/60 text-sm mb-1">Welcome back,</p>
-        <h1 className="text-2xl font-bold">{session.user.name} 👋</h1>
+        <h1 className="text-2xl font-bold flex items-center gap-2">
+          {session.user.name}
+          <Waves className="h-6 w-6 text-[#c9a96e] animate-pulse" />
+        </h1>
         <p className="text-white/60 text-sm mt-2">
           You&apos;ve been a Modest Kouture customer since 2024
         </p>
         <div className="flex gap-6 mt-4 pt-4 border-t border-white/10">
           {[
-            { label: "Orders", value: "12" },
-            { label: "Wishlist", value: "8" },
-            { label: "Reviews", value: "5" },
+            { label: "Orders", value: "12", icon: ShoppingBag },
+            { label: "Wishlist", value: "8", icon: Bookmark },
+            { label: "Reviews", value: "5", icon: Star },
           ].map((stat) => (
-            <div key={stat.label}>
-              <div className="text-xl font-bold text-[#c9a96e]">{stat.value}</div>
-              <div className="text-xs text-white/50">{stat.label}</div>
+            <div key={stat.label} className="flex items-center gap-2">
+              <stat.icon className="h-4 w-4 text-[#c9a96e]/70" />
+              <div>
+                <div className="text-xl font-bold text-[#c9a96e]">{stat.value}</div>
+                <div className="text-xs text-white/50">{stat.label}</div>
+              </div>
             </div>
           ))}
         </div>

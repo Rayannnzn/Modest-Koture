@@ -5,71 +5,56 @@ import {
   SlidersHorizontal,
   Star,
   ChevronRight,
-  Shirt,
-  Baby,
-  Smartphone,
-  PawPrint,
-  Crown,
   Sparkles,
-  Gem,
-  User,
 } from "lucide-react";
+import { CategoryIconsMap } from "@/components/ui/custom-icons";
 import ProductCard from "@/components/ui/ProductCard";
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/utils";
 
-const categoryMeta: Record<string, { name: string; icon: React.ComponentType<{ className?: string }>; description: string; image: string }> = {
+const categoryMeta: Record<string, { name: string; description: string; image: string }> = {
   women: {
     name: "Women's Fashion",
-    icon: Shirt,
     description: "Elegant abayas, dresses, and modest wear for the modern woman",
     image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=1200&h=400&fit=crop",
   },
   men: {
     name: "Men's Fashion",
-    icon: Shirt,
     description: "Refined thobes, shirts, and casual wear for men",
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&h=400&fit=crop",
   },
   children: {
     name: "Children",
-    icon: Baby,
     description: "Adorable and comfortable clothing for little ones",
     image: "https://images.unsplash.com/photo-1519457431-44ccd64a579b?w=1200&h=400&fit=crop",
   },
   electronics: {
     name: "Electronics",
-    icon: Smartphone,
     description: "Smart devices, accessories, and tech essentials",
     image: "https://images.unsplash.com/photo-1498049794561-7780e7231661?w=1200&h=400&fit=crop",
   },
   pets: {
     name: "Pets",
-    icon: PawPrint,
     description: "Premium products for your beloved pets",
     image: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1200&h=400&fit=crop",
   },
   luxury: {
     name: "Luxury",
-    icon: Crown,
     description: "Exclusive designer pieces and premium lifestyle products",
     image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1200&h=400&fit=crop",
   },
   beauty: {
     name: "Beauty",
-    icon: Sparkles,
     description: "Halal-certified cosmetics and skincare essentials",
     image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=1200&h=400&fit=crop",
   },
   jewelry: {
     name: "Jewelry",
-    icon: Gem,
     description: "Handcrafted necklaces, rings, earrings, and bracelets",
     image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1200&h=400&fit=crop",
   },
   "plus-size": {
     name: "Plus Size",
-    icon: User,
     description: "Inclusive fashion celebrating every body shape",
     image: "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=1200&h=400&fit=crop",
   },
@@ -128,12 +113,11 @@ export default async function CategoryPage({
   const { slug } = await params;
   const meta = categoryMeta[slug] ?? {
     name: slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
-    icon: Sparkles,
     description: "Discover our curated collection",
     image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1200&h=400&fit=crop",
   };
 
-  const Icon = meta.icon || Sparkles;
+  const Icon = CategoryIconsMap[slug] || Sparkles;
 
   return (
     <div>

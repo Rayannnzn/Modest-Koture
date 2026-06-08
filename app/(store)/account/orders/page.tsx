@@ -3,14 +3,14 @@ import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import {
-  Package,
   ChevronRight,
   Search,
   Filter,
   Truck,
-  CheckCircle2,
+  CircleCheck,
   Clock,
-  XCircle,
+  CircleX,
+  ClipboardList,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -58,11 +58,11 @@ const orders = [
   },
 ];
 
-const statusConfig: Record<string, { icon: typeof CheckCircle2; color: string; bg: string }> = {
-  Delivered: { icon: CheckCircle2, color: "text-green-700", bg: "bg-green-100" },
+const statusConfig: Record<string, { icon: typeof CircleCheck; color: string; bg: string }> = {
+  Delivered: { icon: CircleCheck, color: "text-green-700", bg: "bg-green-100" },
   Shipped: { icon: Truck, color: "text-blue-700", bg: "bg-blue-100" },
   Processing: { icon: Clock, color: "text-amber-700", bg: "bg-amber-100" },
-  Cancelled: { icon: XCircle, color: "text-red-700", bg: "bg-red-100" },
+  Cancelled: { icon: CircleX, color: "text-red-700", bg: "bg-red-100" },
 };
 
 export default async function OrdersPage() {
@@ -74,7 +74,7 @@ export default async function OrdersPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold flex items-center gap-2">
-            <Package className="h-6 w-6 text-[#c9a96e]" />
+            <ClipboardList className="h-6 w-6 text-[#c9a96e]" />
             My Orders
           </h1>
           <p className="text-muted-foreground text-sm mt-0.5">{orders.length} orders placed</p>

@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Eye, EyeOff, Loader2, ArrowLeft, Check } from "lucide-react";
+import { Eye, EyeOff, Loader2, ArrowLeft, Check, Mail, Lock, User, ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -161,32 +161,43 @@ export default function RegisterPage() {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="name">Full Name</Label>
-              <Input
-                id="name"
-                type="text"
-                placeholder="Your full name"
-                autoComplete="name"
-                {...register("name")}
-                aria-invalid={!!errors.name}
-              />
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  id="name"
+                  type="text"
+                  placeholder="Your full name"
+                  autoComplete="name"
+                  {...register("name")}
+                  aria-invalid={!!errors.name}
+                  className="pl-9"
+                />
+              </div>
               {errors.name && <p className="text-xs text-destructive">{errors.name.message}</p>}
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="email">Email address</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="hello@example.com"
-                autoComplete="email"
-                {...register("email")}
-                aria-invalid={!!errors.email}
-              />
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="hello@example.com"
+                  autoComplete="email"
+                  {...register("email")}
+                  aria-invalid={!!errors.email}
+                  className="pl-9"
+                />
+              </div>
               {errors.email && <p className="text-xs text-destructive">{errors.email.message}</p>}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password" className="flex items-center gap-1.5">
+                <Lock className="h-3.5 w-3.5 text-muted-foreground" />
+                Password
+              </Label>
               <div className="relative">
                 <Input
                   id="password"
@@ -208,7 +219,10 @@ export default function RegisterPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <Label htmlFor="confirmPassword" className="flex items-center gap-1.5">
+                <Lock className="h-3.5 w-3.5 text-muted-foreground" />
+                Confirm Password
+              </Label>
               <div className="relative">
                 <Input
                   id="confirmPassword"
@@ -253,7 +267,12 @@ export default function RegisterPage() {
             </Button>
           </form>
 
-          <p className="mt-6 text-center text-sm text-muted-foreground">
+          <div className="flex items-center justify-center gap-1.5 mt-4 text-xs text-muted-foreground">
+            <ShieldCheck className="h-3.5 w-3.5 text-green-500" />
+            <span>Secured with 256-bit SSL encryption</span>
+          </div>
+
+          <p className="mt-4 text-center text-sm text-muted-foreground">
             Already have an account?{" "}
             <Link href="/login" className="font-semibold text-[#c9a96e] hover:text-[#b8985d]">
               Sign in

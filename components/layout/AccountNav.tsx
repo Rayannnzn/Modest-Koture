@@ -4,10 +4,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
-  Package,
-  MapPin,
-  User,
-  Heart,
+  Truck,
+  Navigation,
+  CircleUser,
+  Bookmark,
   ChevronRight,
   LogOut,
 } from "lucide-react";
@@ -15,10 +15,10 @@ import { signOut } from "next-auth/react";
 
 const navItems = [
   { label: "Dashboard", href: "/account", icon: LayoutDashboard },
-  { label: "My Orders", href: "/account/orders", icon: Package },
-  { label: "Wishlist", href: "/account/wishlist", icon: Heart },
-  { label: "Addresses", href: "/account/addresses", icon: MapPin },
-  { label: "Profile", href: "/account/profile", icon: User },
+  { label: "My Orders", href: "/account/orders", icon: Truck },
+  { label: "Wishlist", href: "/account/wishlist", icon: Bookmark },
+  { label: "Addresses", href: "/account/addresses", icon: Navigation },
+  { label: "Profile", href: "/account/profile", icon: CircleUser },
 ];
 
 export default function AccountNav() {

@@ -9,14 +9,15 @@ import {
   Users,
   Store,
   Package,
-  ShoppingBag,
-  Tags,
-  Wallet,
-  Megaphone,
+  ClipboardList,
+  Tag,
+  Banknote,
+  Bell,
   Settings,
   LogOut,
   ChevronRight,
   Shield,
+  ExternalLink,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -25,10 +26,10 @@ const navItems = [
   { label: "Users", href: "/admin/users", icon: Users },
   { label: "Vendors", href: "/admin/vendors", icon: Store },
   { label: "Products", href: "/admin/products", icon: Package },
-  { label: "Orders", href: "/admin/orders", icon: ShoppingBag },
-  { label: "Categories", href: "/admin/categories", icon: Tags },
-  { label: "Withdrawals", href: "/admin/withdrawals", icon: Wallet },
-  { label: "Announcements", href: "/admin/announcements", icon: Megaphone },
+  { label: "Orders", href: "/admin/orders", icon: ClipboardList },
+  { label: "Categories", href: "/admin/categories", icon: Tag },
+  { label: "Withdrawals", href: "/admin/withdrawals", icon: Banknote },
+  { label: "Announcements", href: "/admin/announcements", icon: Bell },
   { label: "Settings", href: "/admin/settings", icon: Settings },
 ];
 
@@ -73,7 +74,7 @@ export default function AdminSidebar() {
 
       <div className="p-4 border-t border-white/10">
         <Link href="/" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-white/60 hover:text-white hover:bg-white/10 transition-colors mb-1">
-          <Store className="h-4 w-4" />
+          <ExternalLink className="h-4 w-4" />
           View Store
         </Link>
         <button
