@@ -49,11 +49,10 @@ export default function VendorsPage() {
           {categories.map((cat) => (
             <button
               key={cat}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                cat === "All"
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${cat === "All"
                   ? "bg-[#1a1a2e] text-white"
                   : "border border-border text-muted-foreground hover:border-[#c9a96e]/50 hover:text-foreground"
-              }`}
+                }`}
             >
               {cat}
             </button>
