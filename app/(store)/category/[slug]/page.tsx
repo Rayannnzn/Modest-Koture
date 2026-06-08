@@ -5,9 +5,8 @@ import {
   SlidersHorizontal,
   Star,
   ChevronRight,
-  Sparkles,
 } from "lucide-react";
-import { CategoryIconsMap } from "@/components/ui/custom-icons";
+import { CategoryConfigMap } from "@/components/ui/custom-icons";
 import ProductCard from "@/components/ui/ProductCard";
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/utils";
@@ -117,7 +116,8 @@ export default async function CategoryPage({
     image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1200&h=400&fit=crop",
   };
 
-  const Icon = CategoryIconsMap[slug] || Sparkles;
+  const cfg = CategoryConfigMap[slug];
+  const CatIcon = cfg?.icon;
 
   return (
     <div>
@@ -142,9 +142,14 @@ export default async function CategoryPage({
               <span className="text-white font-medium">{meta.name}</span>
             </nav>
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-white/10 backdrop-blur-md text-white flex items-center justify-center border border-white/20 shadow-md">
-                <Icon className="h-6 w-6 stroke-[1.5]" />
-              </div>
+              {CatIcon && (
+                <div
+                  className="w-14 h-14 rounded-2xl flex items-center justify-center border-2 border-white/20 shadow-xl"
+                  style={{ background: "rgba(255,255,255,0.12)", backdropFilter: "blur(12px)" }}
+                >
+                  <CatIcon className="h-7 w-7 text-white" />
+                </div>
+              )}
               <div>
                 <h1 className="text-2xl md:text-4xl font-bold font-serif text-white tracking-tight">{meta.name}</h1>
                 <p className="text-white/70 text-sm mt-1.5 max-w-lg leading-relaxed">{meta.description}</p>

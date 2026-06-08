@@ -12,20 +12,19 @@ import {
   LayoutDashboard,
   Flame,
   Sparkles,
+  LayoutGrid,
 } from "lucide-react";
 import {
   NavSearchIcon,
   NavHeartIcon,
   NavCartIcon,
-  NavUserIcon,
   NavStoreIcon,
   NavMenuIcon,
   NavCloseIcon,
   NavChevronDownIcon,
-  CategoryIconsMap,
+  CategoryConfigMap,
 } from "@/components/ui/custom-icons";
 
-const categoryIcons = CategoryIconsMap;
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -41,25 +40,28 @@ import { getInitials } from "@/lib/utils";
 import { cn } from "@/lib/utils";
 import CartDrawer from "@/components/cart/CartDrawer";
 
+// ─── Category data ────────────────────────────────────────────────────────────
 const categories = [
-  { name: "Women", slug: "women", emoji: "👗" },
-  { name: "Men", slug: "men", emoji: "👔" },
-  { name: "Children", slug: "children", emoji: "🧸" },
-  { name: "Electronics", slug: "electronics", emoji: "📱" },
-  { name: "Pets", slug: "pets", emoji: "🐾" },
-  { name: "Luxury", slug: "luxury", emoji: "💎" },
-  { name: "Beauty", slug: "beauty", emoji: "💄" },
-  { name: "Jewelry", slug: "jewelry", emoji: "💍" },
-  { name: "Plus Size", slug: "plus-size", emoji: "✨" },
+  { name: "Women", slug: "women" },
+  { name: "Men", slug: "men" },
+  { name: "Children", slug: "children" },
+  { name: "Electronics", slug: "electronics" },
+  { name: "Pets", slug: "pets" },
+  { name: "Luxury", slug: "luxury" },
+  { name: "Beauty", slug: "beauty" },
+  { name: "Jewelry", slug: "jewelry" },
+  { name: "Plus Size", slug: "plus-size" },
 ];
 
+// ─── Header Component ─────────────────────────────────────────────────────────
 export default function Header() {
   const { data: session } = useSession();
   const pathname = usePathname();
   const [searchQuery, setSearchQuery] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const { itemCount, toggleCart, isOpen } = useCartStore();
+  const [activePath, setActivePath] = useState("");
+  const { itemCount, toggleCart } = useCartStore();
   const count = itemCount();
 
   const currentPath = pathname || "";
@@ -74,6 +76,10 @@ export default function Header() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    setActivePath(pathname || "");
+  }, [pathname]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -100,7 +106,7 @@ export default function Header() {
           isScrolled && "shadow-md"
         )}
       >
-        {/* Main header */}
+        {/* ── Main header ─────────────────────────────────────── */}
         <div className="container mx-auto px-4 lg:px-6">
           <div className="flex h-20 md:h-24 items-center gap-5">
             {/* Logo */}
@@ -119,10 +125,7 @@ export default function Header() {
             </Link>
 
             {/* Search bar */}
-            <form
-              onSubmit={handleSearch}
-              className="flex-1 max-w-xl hidden md:flex"
-            >
+            <form onSubmit={handleSearch} className="flex-1 max-w-xl hidden md:flex">
               <div className="relative w-full">
                 <NavSearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                 <input
@@ -139,7 +142,7 @@ export default function Header() {
             <div className="flex items-center gap-1 ml-auto">
               {/* Become a seller */}
               <Link href="/become-a-seller" className="hidden lg:block">
-                <Button variant="gold-outline" className="gap-2 h-11 md:h-13 px-4.5 md:px-6 text-sm md:text-base">
+                <Button variant="gold-outline" className="gap-2 h-11 md:h-13 px-4.5 md:px-6 text-sm md:text-base hover:cursor-pointer">
                   <NavStoreIcon className="h-5 w-5" />
                   Sell on MK
                 </Button>
@@ -267,68 +270,138 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Category navigation */}
+        {/* ── Category Navigation Bar (Desktop) ───────────────── */}
         {showCategoryNav && (
-          <nav className="hidden md:block border-t border-border bg-white">
+          <nav
+            className="hidden md:block border-t border-border/60"
+            style={{ background: "linear-gradient(to bottom, #ffffff, #fafafa)" }}
+          >
             <div className="container mx-auto px-4 lg:px-6">
-              <ul className="flex items-center gap-1 h-11 overflow-x-auto scrollbar-none">
-                <li>
+              <ul className="flex items-center h-14 overflow-x-auto scrollbar-none gap-0.5">
+
+                {/* All Categories Dropdown */}
+                <li className="flex-shrink-0 mr-1">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="gap-2 text-white bg-[#1a1a2e] hover:bg-[#1a1a2e]/90 rounded-lg h-9 px-3.5 text-sm font-medium"
-                      >
-                        <NavMenuIcon className="h-4.5 w-4.5" />
+                      <button className="group flex items-center gap-2.5 h-10 px-4 rounded-xl bg-[#1a1a2e] hover:bg-[#1a1a2e]/90 text-white text-base font-semibold transition-all duration-200 shadow-sm hover:shadow-md focus:outline-none">
+                        <LayoutGrid className="h-5 w-5 flex-shrink-0" />
                         All Categories
-                        <NavChevronDownIcon className="h-3.5 w-3.5" />
-                      </Button>
+                        <NavChevronDownIcon className="h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                      </button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="start" className="w-56">
-                      {categories.map((cat) => {
-                        const Icon = categoryIcons[cat.slug] || NavStoreIcon;
-                        return (
-                          <DropdownMenuItem key={cat.slug} asChild>
-                            <Link href={`/category/${cat.slug}`} className="cursor-pointer gap-2">
-                              <Icon className="h-4 w-4 text-muted-foreground" />
-                              {cat.name}
-                            </Link>
-                          </DropdownMenuItem>
-                        );
-                      })}
+
+                    {/* Dropdown panel — two-column grid for premium look */}
+                    <DropdownMenuContent
+                      align="start"
+                      sideOffset={8}
+                      className="p-2 w-64 shadow-xl border border-border/60 rounded-2xl bg-white"
+                    >
+                      <div className="grid grid-cols-1 gap-0.5">
+                        {categories.map((cat) => {
+                          const cfg = CategoryConfigMap[cat.slug];
+                          if (!cfg) return null;
+                          const CatIcon = cfg.icon;
+                          const isActive = activePath === `/category/${cat.slug}`;
+                          return (
+                            <DropdownMenuItem key={cat.slug} asChild>
+                              <Link
+                                href={`/category/${cat.slug}`}
+                                className={cn(
+                                  "flex items-center gap-3 px-3 py-2.5 rounded-xl cursor-pointer transition-all duration-150 group/item",
+                                  isActive
+                                    ? "bg-[#1a1a2e] text-white"
+                                    : "hover:bg-muted/70 text-foreground"
+                                )}
+                              >
+                                <div className={cn(
+                                  "w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-200",
+                                  isActive ? "bg-white/20" : `${cfg.bg} group-hover/item:${cfg.hoverBg}`
+                                )}>
+                                  <CatIcon className={cn("h-3.5 w-3.5", isActive ? "text-white" : cfg.color)} />
+                                </div>
+                                <span className="text-sm font-medium">{cat.name}</span>
+                                {isActive && (
+                                  <div className="ml-auto w-1.5 h-1.5 rounded-full bg-[#c9a96e]" />
+                                )}
+                              </Link>
+                            </DropdownMenuItem>
+                          );
+                        })}
+                      </div>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </li>
+
+                {/* Divider */}
+                <li className="w-px h-5 bg-border/50 mx-1 flex-shrink-0" aria-hidden="true" />
+
+                {/* Individual category pills */}
                 {categories.slice(0, 7).map((cat) => {
-                  const Icon = categoryIcons[cat.slug] || NavStoreIcon;
+                  const cfg = CategoryConfigMap[cat.slug];
+                  if (!cfg) return null;
+                  const CatIcon = cfg.icon;
+                  const isActive = activePath === `/category/${cat.slug}`;
+
                   return (
-                    <li key={cat.slug}>
+                    <li key={cat.slug} className="flex-shrink-0">
                       <Link
                         href={`/category/${cat.slug}`}
-                        className="flex items-center gap-2 px-3.5 py-2 text-sm font-medium text-foreground/80 hover:text-foreground hover:bg-muted rounded-lg transition-colors whitespace-nowrap"
+                        aria-current={isActive ? "page" : undefined}
+                        className={cn(
+                          "group relative flex items-center gap-2.5 px-3.5 py-2 rounded-xl text-base font-medium transition-all duration-200 whitespace-nowrap select-none",
+                          isActive
+                            ? "text-[#1a1a2e] bg-[#1a1a2e]/[0.06]"
+                            : "text-foreground/70 hover:text-foreground hover:bg-muted/60"
+                        )}
                       >
-                        <Icon className="h-4.5 w-4.5 text-muted-foreground" />
+                        {/* Icon container with per-category color */}
+                        <div
+                          className={cn(
+                            "w-7 h-7 rounded-lg flex items-center justify-center transition-all duration-200 flex-shrink-0",
+                            isActive
+                              ? `${cfg.bg} scale-110`
+                              : `${cfg.bg} group-hover:${cfg.hoverBg} group-hover:scale-110`
+                          )}
+                        >
+                          <CatIcon
+                            className={cn(
+                              "h-4 w-4 transition-colors duration-200",
+                              cfg.color
+                            )}
+                          />
+                        </div>
+
                         {cat.name}
+
+                        {/* Active underline indicator */}
+                        {isActive && (
+                          <span
+                            className="absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 w-4/5 rounded-full"
+                            style={{ background: "linear-gradient(90deg, transparent, #c9a96e, transparent)" }}
+                          />
+                        )}
                       </Link>
                     </li>
                   );
                 })}
+
+                {/* Trending pill (far right) */}
                 <li className="ml-auto flex-shrink-0">
                   <Link
                     href="/shop?sort=popular"
-                    className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-[#c9a96e] font-medium hover:text-[#b8985d] transition-colors"
+                    className="group flex items-center gap-2 px-4 py-2 rounded-xl text-base font-semibold text-[#b8935d] hover:text-[#1a1a2e] hover:bg-[#faefd8] transition-all duration-200 whitespace-nowrap"
                   >
-                    <Flame className="h-3.5 w-3.5" />
+                    <Flame className="h-4.5 w-4.5 text-[#c9a96e] group-hover:scale-110 transition-transform duration-200" />
                     Trending
                   </Link>
                 </li>
+
               </ul>
             </div>
           </nav>
         )}
 
-        {/* Mobile menu */}
+        {/* ── Mobile Menu ──────────────────────────────────────── */}
         {isMobileMenuOpen && (
           <div className="md:hidden bg-white border-t border-border">
             {/* Mobile search */}
@@ -346,6 +419,7 @@ export default function Header() {
                 </div>
               </form>
             </div>
+
             {/* Mobile auth */}
             {!session && (
               <div className="px-4 pb-3 flex gap-2">
@@ -357,30 +431,59 @@ export default function Header() {
                 </Link>
               </div>
             )}
-            {/* Mobile categories */}
+
+            {/* Mobile categories — premium colored grid */}
             <div className="border-t border-border">
-              <p className="px-4 py-2 text-xs font-medium text-muted-foreground uppercase tracking-wide">
-                Categories
+              <p className="px-4 pt-3 pb-1 text-xs font-semibold text-muted-foreground uppercase tracking-widest">
+                Shop by Category
               </p>
-              <div className="grid grid-cols-3 gap-1 p-3">
+              <div className="grid grid-cols-3 gap-2 p-3">
                 {categories.map((cat) => {
-                  const Icon = categoryIcons[cat.slug] || NavStoreIcon;
+                  const cfg = CategoryConfigMap[cat.slug];
+                  if (!cfg) return null;
+                  const CatIcon = cfg.icon;
+                  const isActive = activePath === `/category/${cat.slug}`;
+
                   return (
                     <Link
                       key={cat.slug}
                       href={`/category/${cat.slug}`}
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="flex flex-col items-center gap-1.5 p-2 rounded-xl hover:bg-muted text-center transition-colors"
+                      className={cn(
+                        "group flex flex-col items-center gap-2 py-3 px-2 rounded-2xl text-center transition-all duration-200 active:scale-95",
+                        isActive
+                          ? "bg-[#1a1a2e]"
+                          : "bg-muted/40 hover:bg-muted"
+                      )}
                     >
-                      <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center text-muted-foreground">
-                        <Icon className="h-5 w-5" />
+                      {/* Colored icon bubble */}
+                      <div
+                        className={cn(
+                          "w-11 h-11 rounded-xl flex items-center justify-center shadow-sm transition-all duration-200 group-hover:scale-105",
+                          isActive ? "bg-white/15" : cfg.bg
+                        )}
+                      >
+                        <CatIcon
+                          className={cn(
+                            "h-5 w-5",
+                            isActive ? "text-white" : cfg.color
+                          )}
+                        />
                       </div>
-                      <span className="text-xs font-medium text-foreground/80">{cat.name}</span>
+                      <span
+                        className={cn(
+                          "text-[11px] font-semibold leading-tight",
+                          isActive ? "text-white" : "text-foreground/75"
+                        )}
+                      >
+                        {cat.name}
+                      </span>
                     </Link>
                   );
                 })}
               </div>
             </div>
+
             {/* Become a seller */}
             <div className="p-4 border-t border-border">
               <Link href="/become-a-seller" onClick={() => setIsMobileMenuOpen(false)}>

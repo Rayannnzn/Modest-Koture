@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { ArrowRight, Store } from "lucide-react";
-import { CategoryIconsMap } from "@/components/ui/custom-icons";
+import { ArrowRight, LayoutGrid } from "lucide-react";
+import { CategoryConfigMap } from "@/components/ui/custom-icons";
 
 const categories = [
   { name: "Women", slug: "women", count: "2.1K items" },
@@ -19,9 +19,12 @@ export default function CategoryGrid() {
     <section className="container mx-auto px-4 lg:px-6 py-16">
       <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
         <div>
-          <h2 className="text-3xl font-bold font-serif text-foreground tracking-tight">
-            Shop by Category
-          </h2>
+          <div className="flex items-center gap-2">
+            <LayoutGrid className="h-5 w-5 text-[#c9a96e]" />
+            <h2 className="text-3xl font-bold font-serif text-foreground tracking-tight">
+              Shop by Category
+            </h2>
+          </div>
           <p className="text-muted-foreground text-sm mt-1">
             Explore our curated modest fashion and luxury lifestyle collections
           </p>
@@ -37,22 +40,26 @@ export default function CategoryGrid() {
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-9 gap-4">
         {categories.map((cat) => {
-          const Icon = CategoryIconsMap[cat.slug] || Store;
+          const cfg = CategoryConfigMap[cat.slug];
+          if (!cfg) return null;
+          const CatIcon = cfg.icon;
           return (
             <Link
               key={cat.slug}
               href={`/category/${cat.slug}`}
-              className="group flex flex-col items-center p-5 rounded-xl bg-white border border-border transition-all duration-300 hover:border-[#c9a96e] hover:shadow-premium hover:-translate-y-1 text-center"
+              className="group flex flex-col items-center p-4 lg:p-5 rounded-2xl bg-white border border-border/60 transition-all duration-300 hover:border-transparent hover:shadow-lg hover:-translate-y-1.5 text-center"
             >
-              {/* Icon container */}
-              <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-[#f8f5f0] text-[#1a1a2e] flex items-center justify-center mb-3 group-hover:bg-[#1a1a2e] group-hover:text-white transition-all duration-300 shadow-sm">
-                <Icon className="h-5 w-5 lg:h-6 lg:w-6 stroke-[1.5]" />
+              {/* Colored icon container */}
+              <div
+                className={`w-12 h-12 lg:w-14 lg:h-14 rounded-2xl ${cfg.bg} flex items-center justify-center mb-3 group-hover:scale-110 transition-all duration-300 shadow-sm`}
+              >
+                <CatIcon className={`h-5 w-5 lg:h-6 lg:w-6 ${cfg.color} transition-colors duration-300`} />
               </div>
               <div className="flex flex-col">
                 <span className="text-xs font-semibold text-foreground group-hover:text-[#c9a96e] transition-colors leading-tight">
                   {cat.name}
                 </span>
-                <span className="text-xs text-muted-foreground mt-1 tracking-wide uppercase">
+                <span className="text-[10px] text-muted-foreground mt-1 tracking-wide uppercase">
                   {cat.count}
                 </span>
               </div>
