@@ -180,7 +180,7 @@ export default function BecomeASellerPage() {
                   <ArrowRight className="h-5 w-5" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="border-white/20 text-white hover:bg-white/10">
+              <Button asChild variant="outline" size="lg" className="border-white/20 text-black hover:bg-white/30">
                 <Link href="/contact">Talk to Sales</Link>
               </Button>
             </div>
