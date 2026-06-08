@@ -127,7 +127,7 @@ export default function HeroSlider() {
                   asChild
                   variant="outline"
                   size="lg"
-                  className="border-white/20 text-white hover:bg-white hover:text-[#1a1a2e] uppercase text-xs tracking-widest font-bold rounded-lg transition-colors cursor-pointer"
+                  className="border-white/20 text-black hover:bg-white hover:text-[#1a1a2e] uppercase text-xs tracking-widest font-bold rounded-lg transition-colors cursor-pointer"
                 >
                   <Link href={slide.secondaryHref}>{slide.secondaryCta}</Link>
                 </Button>
