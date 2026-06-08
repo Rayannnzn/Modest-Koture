@@ -328,7 +328,7 @@ export default function Header() {
                     href="/shop?sort=popular"
                     className="flex items-center gap-1 px-3 py-1.5 text-sm text-[#c9a96e] font-medium hover:text-[#b8985d] transition-colors"
                   >
-                    🔥 Trending
+                    Trending
                   </Link>
                 </li>
               </ul>

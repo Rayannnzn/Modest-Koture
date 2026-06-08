@@ -89,7 +89,7 @@ const trendingProducts = [
 function ProductCard({ product }: { product: typeof trendingProducts[0] }) {
   const { toggleItem, hasItem } = useWishlistStore();
   const { addItem } = useCartStore();
-  
+
   const isWishlisted = hasItem(product.id);
   const discount = product.salePrice
     ? Math.round(((product.price - product.salePrice) / product.price) * 100)
@@ -219,7 +219,6 @@ export default function TrendingProducts() {
       <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-xl">🔥</span>
             <h2 className="text-3xl font-bold font-serif text-foreground tracking-tight">
               Trending Now
             </h2>
