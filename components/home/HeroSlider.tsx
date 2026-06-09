@@ -1,11 +1,28 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, ArrowRight, Store, Gem, PackageCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Constants
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** Minimum horizontal distance (px) to trigger a slide change. */
+const SWIPE_THRESHOLD = 50;
+
+/**
+ * Maximum ratio of vertical-to-horizontal movement allowed before we
+ * treat the gesture as a vertical scroll and ignore it.
+ */
+const VERTICAL_SCROLL_LOCK_RATIO = 1.2;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Slide data
+// ─────────────────────────────────────────────────────────────────────────────
 
 const slides = [
   {
@@ -52,16 +69,183 @@ const slides = [
   },
 ];
 
+// ─────────────────────────────────────────────────────────────────────────────
+// useDragSwipe hook
+// ─────────────────────────────────────────────────────────────────────────────
+
+interface UseDragSwipeOptions {
+  onSwipeLeft: () => void;
+  onSwipeRight: () => void;
+  /** Pause auto-play during a drag gesture. */
+  onDragStart?: () => void;
+  onDragEnd?: () => void;
+}
+
+interface DragSwipeHandlers {
+  onMouseDown: React.MouseEventHandler<HTMLElement>;
+  onMouseMove: React.MouseEventHandler<HTMLElement>;
+  onMouseUp: React.MouseEventHandler<HTMLElement>;
+  onMouseLeave: React.MouseEventHandler<HTMLElement>;
+  onTouchStart: React.TouchEventHandler<HTMLElement>;
+  onTouchMove: React.TouchEventHandler<HTMLElement>;
+  onTouchEnd: React.TouchEventHandler<HTMLElement>;
+  /** True while a drag is in progress — use to suppress click events on children. */
+  isDragging: boolean;
+}
+
+function useDragSwipe({
+  onSwipeLeft,
+  onSwipeRight,
+  onDragStart,
+  onDragEnd,
+}: UseDragSwipeOptions): DragSwipeHandlers {
+  const startX = useRef<number>(0);
+  const startY = useRef<number>(0);
+  const isDragging = useRef<boolean>(false);
+  const isScrollLocked = useRef<boolean>(false);
+  const [draggingState, setDraggingState] = useState(false);
+
+  // ── Shared commit logic ──────────────────────────────────────────────────
+
+  const commit = useCallback(
+    (deltaX: number) => {
+      if (!isDragging.current) return;
+      isDragging.current = false;
+      isScrollLocked.current = false;
+      setDraggingState(false);
+      onDragEnd?.();
+
+      if (Math.abs(deltaX) >= SWIPE_THRESHOLD) {
+        if (deltaX < 0) {
+          onSwipeLeft();
+        } else {
+          onSwipeRight();
+        }
+      }
+    },
+    [onSwipeLeft, onSwipeRight, onDragEnd]
+  );
+
+  // ── Mouse handlers ───────────────────────────────────────────────────────
+
+  const onMouseDown: React.MouseEventHandler<HTMLElement> = useCallback(
+    (e) => {
+      // Only handle primary mouse button
+      if (e.button !== 0) return;
+      startX.current = e.clientX;
+      startY.current = e.clientY;
+      isDragging.current = true;
+      isScrollLocked.current = false;
+      setDraggingState(true);
+      onDragStart?.();
+    },
+    [onDragStart]
+  );
+
+  const onMouseMove: React.MouseEventHandler<HTMLElement> = useCallback((e) => {
+    if (!isDragging.current) return;
+    // Prevent text selection during drag
+    e.preventDefault();
+  }, []);
+
+  const onMouseUp: React.MouseEventHandler<HTMLElement> = useCallback(
+    (e) => {
+      if (!isDragging.current) return;
+      const deltaX = e.clientX - startX.current;
+      commit(deltaX);
+    },
+    [commit]
+  );
+
+  const onMouseLeave: React.MouseEventHandler<HTMLElement> = useCallback(
+    (e) => {
+      if (!isDragging.current) return;
+      const deltaX = e.clientX - startX.current;
+      commit(deltaX);
+    },
+    [commit]
+  );
+
+  // ── Touch handlers ───────────────────────────────────────────────────────
+
+  const onTouchStart: React.TouchEventHandler<HTMLElement> = useCallback(
+    (e) => {
+      const touch = e.touches[0];
+      startX.current = touch.clientX;
+      startY.current = touch.clientY;
+      isDragging.current = true;
+      isScrollLocked.current = false;
+      setDraggingState(true);
+      onDragStart?.();
+    },
+    [onDragStart]
+  );
+
+  const onTouchMove: React.TouchEventHandler<HTMLElement> = useCallback((e) => {
+    if (!isDragging.current) return;
+
+    const touch = e.touches[0];
+    const deltaX = touch.clientX - startX.current;
+    const deltaY = touch.clientY - startY.current;
+
+    // First significant movement determines intent (horizontal vs. vertical scroll)
+    if (!isScrollLocked.current) {
+      if (Math.abs(deltaY) > Math.abs(deltaX) * VERTICAL_SCROLL_LOCK_RATIO) {
+        // User is scrolling vertically — abort the drag
+        isDragging.current = false;
+        isScrollLocked.current = false;
+        setDraggingState(false);
+        return;
+      }
+      isScrollLocked.current = true;
+    }
+
+    // Prevent native scroll only when we are sure this is a horizontal swipe
+    e.preventDefault();
+  }, []);
+
+  const onTouchEnd: React.TouchEventHandler<HTMLElement> = useCallback(
+    (e) => {
+      if (!isDragging.current) return;
+      const touch = e.changedTouches[0];
+      const deltaX = touch.clientX - startX.current;
+      commit(deltaX);
+    },
+    [commit]
+  );
+
+  return {
+    onMouseDown,
+    onMouseMove,
+    onMouseUp,
+    onMouseLeave,
+    onTouchStart,
+    onTouchMove,
+    onTouchEnd,
+    isDragging: draggingState,
+  };
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// HeroSlider component
+// ─────────────────────────────────────────────────────────────────────────────
+
 export default function HeroSlider() {
   const [current, setCurrent] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  const goTo = useCallback((index: number) => {
-    if (isTransitioning) return;
-    setIsTransitioning(true);
-    setCurrent(index);
-    setTimeout(() => setIsTransitioning(false), 500);
-  }, [isTransitioning]);
+  // Track whether auto-play should be paused (during drag)
+  const isPausedRef = useRef(false);
+
+  const goTo = useCallback(
+    (index: number) => {
+      if (isTransitioning) return;
+      setIsTransitioning(true);
+      setCurrent(index);
+      setTimeout(() => setIsTransitioning(false), 500);
+    },
+    [isTransitioning]
+  );
 
   const next = useCallback(() => {
     goTo((current + 1) % slides.length);
@@ -71,20 +255,63 @@ export default function HeroSlider() {
     goTo((current - 1 + slides.length) % slides.length);
   }, [current, goTo]);
 
+  // Auto-play — respects drag pause via ref to avoid unnecessary re-renders
   useEffect(() => {
-    const timer = setInterval(next, 5000);
+    const timer = setInterval(() => {
+      if (!isPausedRef.current) next();
+    }, 5000);
     return () => clearInterval(timer);
   }, [next]);
+
+  // ── Drag/swipe integration ─────────────────────────────────────────────
+
+  const dragHandlers = useDragSwipe({
+    onSwipeLeft: next,
+    onSwipeRight: prev,
+    onDragStart: () => {
+      isPausedRef.current = true;
+    },
+    onDragEnd: () => {
+      // Resume after a short cooldown so the just-triggered navigation settles
+      setTimeout(() => {
+        isPausedRef.current = false;
+      }, 1000);
+    },
+  });
 
   const slide = slides[current];
 
   return (
     <section className="relative overflow-hidden rounded-2xl mx-4 lg:mx-6 mt-4">
+      {/*
+       * The interactive drag surface.
+       * - `select-none` prevents text selection while dragging (Tailwind utility).
+       *   We also set userSelect via inline style for cross-browser safety.
+       * - `touch-pan-y` is intentionally NOT set here; we handle scroll locking
+       *   ourselves inside the hook so we can allow vertical scrolls through.
+       * - `cursor-grab` / `cursor-grabbing` give the user a clear affordance.
+       */}
       <div
+        role="region"
+        aria-label="Featured collection slider"
         className={cn(
           "relative min-h-[420px] lg:min-h-[520px] bg-gradient-to-br transition-all duration-700",
-          slide.bgColor
+          slide.bgColor,
+          dragHandlers.isDragging ? "cursor-grabbing" : "cursor-grab"
         )}
+        style={{
+          userSelect: dragHandlers.isDragging ? "none" : undefined,
+          // Allow the browser's passive touch listener on the scroll axis;
+          // our touchMove handler will call preventDefault only for horizontal swipes.
+          touchAction: "pan-y",
+        }}
+        onMouseDown={dragHandlers.onMouseDown}
+        onMouseMove={dragHandlers.onMouseMove}
+        onMouseUp={dragHandlers.onMouseUp}
+        onMouseLeave={dragHandlers.onMouseLeave}
+        onTouchStart={dragHandlers.onTouchStart}
+        onTouchMove={dragHandlers.onTouchMove}
+        onTouchEnd={dragHandlers.onTouchEnd}
       >
         <div className="container mx-auto px-6 lg:px-10 py-12 lg:py-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
@@ -111,14 +338,21 @@ export default function HeroSlider() {
               <p className="text-white/80 text-sm lg:text-base mb-8 leading-relaxed max-w-md">
                 {slide.subtitle}
               </p>
-              <div className="flex flex-wrap gap-3.5">
+              {/*
+               * Suppress click events on CTA links while dragging so that a
+               * quick drag release doesn't accidentally navigate the user away.
+               */}
+              <div
+                className="flex flex-wrap gap-3.5"
+                onClick={(e) => dragHandlers.isDragging && e.preventDefault()}
+              >
                 <Button
                   asChild
                   size="lg"
                   className="gap-2 text-[#1a1a2e] font-semibold uppercase text-xs tracking-wide rounded-lg hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer shadow-lg"
                   style={{ backgroundColor: slide.accentColor }}
                 >
-                  <Link href={slide.ctaHref}>
+                  <Link href={slide.ctaHref} draggable={false}>
                     {slide.cta}
                     <ArrowRight className="h-3.5 w-3.5" />
                   </Link>
@@ -129,7 +363,9 @@ export default function HeroSlider() {
                   size="lg"
                   className="border-white/20 text-black hover:bg-white hover:text-[#1a1a2e] uppercase text-xs tracking-wide font-semibold rounded-lg transition-colors cursor-pointer"
                 >
-                  <Link href={slide.secondaryHref}>{slide.secondaryCta}</Link>
+                  <Link href={slide.secondaryHref} draggable={false}>
+                    {slide.secondaryCta}
+                  </Link>
                 </Button>
               </div>
 
@@ -147,7 +383,9 @@ export default function HeroSlider() {
                         {stat.value}
                       </div>
                     </div>
-                    <div className="text-xs text-white/50 uppercase tracking-wide font-medium mt-0.5">{stat.label}</div>
+                    <div className="text-xs text-white/50 uppercase tracking-wide font-medium mt-0.5">
+                      {stat.label}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -177,6 +415,7 @@ export default function HeroSlider() {
                     alt={slide.tag}
                     fill
                     className="object-cover"
+                    draggable={false}
                     priority
                     sizes="(max-width: 1024px) 288px, 384px"
                   />
