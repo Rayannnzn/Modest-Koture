@@ -85,7 +85,15 @@ export default function FeaturedVendors() {
         >
           {vendors.map((vendor) => (
             <StaggerItem key={vendor.id}>
-              <div className="group bg-white rounded-xl overflow-hidden border border-border hover:border-[#c9a96e]/30 hover:shadow-premium transition-all duration-300 flex flex-col h-full">
+              <div className="group relative bg-white rounded-xl overflow-hidden border border-border hover:border-[#c9a96e]/30 hover:shadow-premium transition-all duration-300 flex flex-col h-full">
+                {/* Stretched link — covers the entire card */}
+                <Link
+                  href={`/vendors/${vendor.slug}`}
+                  className="absolute inset-0 z-[1] rounded-xl focus-visible:ring-2 focus-visible:ring-[#c9a96e] focus-visible:ring-offset-2 focus:outline-none"
+                  aria-label={`Visit ${vendor.name} store`}
+                  tabIndex={0}
+                />
+
                 {/* Banner */}
                 <div className="relative h-32 bg-[#fdfdfd] overflow-hidden flex-shrink-0">
                   <Image
@@ -111,7 +119,11 @@ export default function FeaturedVendors() {
                         sizes="64px"
                       />
                     </div>
-                    <button className="h-7.5 px-3 rounded-lg border border-border hover:border-[#c9a96e] text-xs font-semibold text-[#1a1a2e] hover:text-[#c9a96e] bg-white transition-colors cursor-pointer">
+                    {/* Follow button — z-10 so it stays above the stretched link */}
+                    <button
+                      onClick={(e) => e.preventDefault()}
+                      className="h-7.5 px-3 rounded-lg border border-border hover:border-[#c9a96e] text-xs font-semibold text-[#1a1a2e] hover:text-[#c9a96e] bg-white transition-colors cursor-pointer relative z-10"
+                    >
                       Follow
                     </button>
                   </div>
@@ -128,7 +140,7 @@ export default function FeaturedVendors() {
                     </p>
                   </div>
 
-                  {/* Stats & Link */}
+                  {/* Stats & Visit */}
                   <div className="flex items-center justify-between text-xs pt-3.5 border-t border-muted/50 mt-auto">
                     <div className="flex items-center gap-3">
                       <div className="flex items-center gap-1">
@@ -140,13 +152,10 @@ export default function FeaturedVendors() {
                         <span>{vendor.products} items</span>
                       </div>
                     </div>
-                    <Link
-                      href={`/vendors/${vendor.slug}`}
-                      className="flex items-center gap-0.5 text-xs font-semibold text-[#c9a96e] hover:text-[#b8985d] transition-colors"
-                    >
-                      <span>Visit</span>
-                      <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-                    </Link>
+                    <span className="flex items-center gap-0.5 text-xs font-semibold text-[#c9a96e]">
+                      Visit
+                      <ChevronRight className="h-3.5 w-3.5" />
+                    </span>
                   </div>
                 </div>
               </div>

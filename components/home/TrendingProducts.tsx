@@ -127,6 +127,14 @@ function ProductCard({ product }: { product: typeof trendingProducts[0] }) {
 
   return (
     <div className="group relative bg-white rounded-xl overflow-hidden border border-border hover:border-[#c9a96e]/30 hover:shadow-premium transition-all duration-300 flex flex-col h-full">
+      {/* Stretched link — z-[1]: above content, transparent, all card clicks navigate */}
+      <Link
+        href={`/shop/${product.slug}`}
+        className="absolute inset-0 z-[1] rounded-xl focus-visible:ring-2 focus-visible:ring-[#c9a96e] focus-visible:ring-offset-2 focus:outline-none"
+        aria-label={`View ${product.title}`}
+        tabIndex={0}
+      />
+
       {/* Image container */}
       <div className="relative aspect-[3/4] bg-[#fdfdfd] overflow-hidden flex-shrink-0">
         <Image
@@ -149,17 +157,17 @@ function ProductCard({ product }: { product: typeof trendingProducts[0] }) {
             </span>
           )}
         </div>
-        {/* Wishlist Button */}
+        {/* Wishlist Button — z-2 to stay above stretched link */}
         <button
           onClick={handleWishlist}
-          className="absolute top-2.5 right-2.5 w-8 h-8 rounded-full bg-white/80 backdrop-blur-md shadow-sm border border-black/5 flex items-center justify-center transition-all duration-300 hover:bg-white hover:scale-110 z-10"
+          className="absolute top-2.5 right-2.5 w-8 h-8 rounded-full bg-white/80 backdrop-blur-md shadow-sm border border-black/5 flex items-center justify-center transition-all duration-300 hover:bg-white hover:scale-110 z-[2]"
           aria-label="Toggle Wishlist"
         >
           <Heart className={cn("h-4 w-4 transition-colors", isWishlisted ? "fill-red-500 text-red-500" : "text-muted-foreground hover:text-red-500")} />
         </button>
 
-        {/* Quick Add Overlay */}
-        <div className="absolute bottom-0 inset-x-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-10">
+        {/* Quick Add Overlay — z-2 */}
+        <div className="absolute bottom-0 inset-x-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-[2]">
           <button
             onClick={handleQuickAdd}
             className="w-full py-2.5 rounded-lg bg-[#1a1a2e] text-white text-xs font-semibold uppercase tracking-wide flex items-center justify-center gap-2 hover:bg-black transition-colors shadow-md"
@@ -170,16 +178,14 @@ function ProductCard({ product }: { product: typeof trendingProducts[0] }) {
         </div>
       </div>
 
-      {/* Product info */}
+      {/* Product info — no z-index; content renders through the transparent link */}
       <div className="p-4 flex flex-col flex-1">
         <p className="text-xs text-muted-foreground uppercase tracking-wide font-medium mb-1">
           {product.vendor}
         </p>
-        <Link href={`/shop/${product.slug}`} className="flex-1">
-          <h3 className="font-serif font-medium text-sm md:text-base leading-snug mb-2 text-foreground hover:text-[#c9a96e] transition-colors line-clamp-2">
-            {product.title}
-          </h3>
-        </Link>
+        <h3 className="font-serif font-medium text-sm md:text-base leading-snug mb-2 text-foreground group-hover:text-[#c9a96e] transition-colors line-clamp-2 flex-1">
+          {product.title}
+        </h3>
         {/* Rating */}
         <div className="flex items-center gap-1 mb-2.5">
           <div className="flex items-center gap-0.5">

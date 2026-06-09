@@ -93,8 +93,18 @@ function MiniProductCard({ product, showcaseCategory, showcaseSlug }: MiniProduc
     toast.success(`Added ${product.title} to cart!`);
   };
 
+  const productHref = `/shop/${product.title.toLowerCase().replace(/\s+/g, "-")}`;
+
   return (
-    <div className="group bg-white rounded-xl overflow-hidden border border-border hover:border-[#c9a96e]/30 hover:shadow-premium transition-all duration-300 flex flex-col h-full">
+    <div className="group relative bg-white rounded-xl overflow-hidden border border-border hover:border-[#c9a96e]/30 hover:shadow-premium transition-all duration-300 flex flex-col h-full">
+      {/* Stretched link — covers the full card */}
+      <Link
+        href={productHref}
+        className="absolute inset-0 z-[1] rounded-xl focus-visible:ring-2 focus-visible:ring-[#c9a96e] focus-visible:ring-offset-2 focus:outline-none"
+        aria-label={`View ${product.title}`}
+        tabIndex={0}
+      />
+
       <div className="relative aspect-[3/4] bg-[#fdfdfd] overflow-hidden flex-shrink-0">
         <Image
           src={product.image}
@@ -103,16 +113,16 @@ function MiniProductCard({ product, showcaseCategory, showcaseSlug }: MiniProduc
           className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
           sizes="200px"
         />
-        {/* Wishlist Button */}
+        {/* Wishlist Button — z-10 */}
         <button
           onClick={handleWishlist}
-          className="absolute top-2 right-2 w-7.5 h-7.5 rounded-full bg-white/80 backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-white hover:scale-105 shadow-sm border border-black/5 z-10"
+          className="absolute top-2 right-2 w-7.5 h-7.5 rounded-full bg-white/80 backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-white hover:scale-105 shadow-sm border border-black/5 z-[2]"
           aria-label="Toggle Wishlist"
         >
           <Heart className={cn("h-3.5 w-3.5 transition-colors", isWishlisted ? "fill-red-500 text-red-500" : "text-muted-foreground hover:text-red-500")} />
         </button>
-        {/* Add to Cart overlay */}
-        <div className="absolute bottom-0 inset-x-0 p-2 translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-10">
+        {/* Add to Cart overlay — z-10 */}
+        <div className="absolute bottom-0 inset-x-0 p-2 translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-[2]">
           <button
             onClick={handleAddToCart}
             className="w-full py-2 rounded-lg bg-[#1a1a2e] text-white text-xs uppercase font-semibold tracking-wide flex items-center justify-center gap-1.5 hover:bg-black transition-colors"
@@ -122,8 +132,9 @@ function MiniProductCard({ product, showcaseCategory, showcaseSlug }: MiniProduc
           </button>
         </div>
       </div>
+
       <div className="p-3 flex flex-col flex-1">
-        <h4 className="font-serif font-medium text-xs leading-snug line-clamp-2 mb-1.5 text-foreground hover:text-[#c9a96e] transition-colors">
+        <h4 className="font-serif font-medium text-xs leading-snug line-clamp-2 mb-1.5 text-foreground group-hover:text-[#c9a96e] transition-colors">
           {product.title}
         </h4>
         <div className="flex items-center gap-1 mb-2">
