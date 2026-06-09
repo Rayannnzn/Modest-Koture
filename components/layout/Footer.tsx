@@ -1,8 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import { Mail, Phone, Send, BadgeCheck, Truck, RefreshCw, HeadphonesIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
+import { FadeUp, FadeIn, StaggerGrid, StaggerItem } from "@/components/ui/motion";
 
 const footerLinks = {
   company: [
@@ -42,29 +44,35 @@ export default function Footer() {
       {/* Trust badges row */}
       <div className="border-b border-white/5 bg-white/[0.03]">
         <div className="container mx-auto px-4 lg:px-6 py-5">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+          <StaggerGrid
+            stagger={0.07}
+            delayChildren={0.05}
+            className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center"
+          >
             {[
               { icon: Truck, label: "Free Shipping", sub: "Orders over $75" },
               { icon: BadgeCheck, label: "Halal Certified", sub: "Verified products" },
               { icon: RefreshCw, label: "Easy Returns", sub: "30-day policy" },
               { icon: HeadphonesIcon, label: "24/7 Support", sub: "Always here for you" },
             ].map(({ icon: Icon, label, sub }) => (
-              <div key={label} className="flex flex-col items-center gap-1.5">
-                <div className="w-9 h-9 rounded-full bg-[#c9a96e]/10 border border-[#c9a96e]/20 flex items-center justify-center">
-                  <Icon className="h-4 w-4 text-[#c9a96e]" />
+              <StaggerItem key={label}>
+                <div className="flex flex-col items-center gap-1.5">
+                  <div className="w-9 h-9 rounded-full bg-[#c9a96e]/10 border border-[#c9a96e]/20 flex items-center justify-center">
+                    <Icon className="h-4 w-4 text-[#c9a96e]" />
+                  </div>
+                  <p className="text-white text-xs font-semibold">{label}</p>
+                  <p className="text-white/40 text-[10px]">{sub}</p>
                 </div>
-                <p className="text-white text-xs font-semibold">{label}</p>
-                <p className="text-white/40 text-[10px]">{sub}</p>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGrid>
         </div>
       </div>
 
       {/* Newsletter section */}
       <div className="border-b border-white/10">
         <div className="container mx-auto px-4 lg:px-6 py-12">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+          <FadeUp className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
               <h3 className="text-2xl font-bold mb-1">
                 Join the <span className="text-[#c9a96e]">Modest Kouture</span> community
@@ -84,7 +92,7 @@ export default function Footer() {
                 Subscribe
               </Button>
             </form>
-          </div>
+          </FadeUp>
         </div>
       </div>
 
@@ -92,7 +100,7 @@ export default function Footer() {
       <div className="container mx-auto px-4 lg:px-6 py-12">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
           {/* Brand column */}
-          <div className="col-span-2 md:col-span-3 lg:col-span-2">
+          <FadeUp delay={0.05} className="col-span-2 md:col-span-3 lg:col-span-2">
             <Link href="/" className="flex items-center gap-2 mb-4">
               <div className="w-9 h-9 rounded-xl bg-[#c9a96e] flex items-center justify-center">
                 <span className="text-[#1a1a2e] font-bold text-lg">M</span>
@@ -141,36 +149,41 @@ export default function Footer() {
                 <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
               </a>
             </div>
-
-          </div>
+          </FadeUp>
 
           {/* Links columns */}
-          {[
-            { title: "Company", links: footerLinks.company },
-            { title: "Support", links: footerLinks.support },
-            { title: "Sellers", links: footerLinks.sellers },
-            { title: "Legal", links: footerLinks.legal },
-          ].map(({ title, links }) => (
-            <div key={title}>
-              <h4 className="font-semibold text-sm mb-4 text-white">{title}</h4>
-              <ul className="space-y-2.5">
-                {links.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="text-sm text-white/60 hover:text-[#c9a96e] transition-colors"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <StaggerGrid
+            stagger={0.10}
+            delayChildren={0.1}
+            className="col-span-2 md:col-span-3 lg:col-span-4 grid grid-cols-2 md:grid-cols-4 gap-8"
+          >
+            {[
+              { title: "Company", links: footerLinks.company },
+              { title: "Support", links: footerLinks.support },
+              { title: "Sellers", links: footerLinks.sellers },
+              { title: "Legal", links: footerLinks.legal },
+            ].map(({ title, links }) => (
+              <StaggerItem key={title}>
+                <h4 className="font-semibold text-sm mb-4 text-white">{title}</h4>
+                <ul className="space-y-2.5">
+                  {links.map((link) => (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        className="text-sm text-white/60 hover:text-[#c9a96e] transition-colors"
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </StaggerItem>
+            ))}
+          </StaggerGrid>
         </div>
 
         {/* Categories */}
-        <div className="mt-10 pt-8 border-t border-white/10">
+        <FadeUp delay={0.1} className="mt-10 pt-8 border-t border-white/10">
           <p className="text-xs text-white/40 uppercase tracking-wide mb-3">Shop by Category</p>
           <div className="flex flex-wrap gap-2">
             {categories.map((cat) => (
@@ -183,11 +196,11 @@ export default function Footer() {
               </Link>
             ))}
           </div>
-        </div>
+        </FadeUp>
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-white/10">
+      <FadeIn className="border-t border-white/10">
         <div className="container mx-auto px-4 lg:px-6 py-5 flex flex-col md:flex-row items-center justify-between gap-3 text-sm text-white/40">
           <p>© {new Date().getFullYear()} Modest Kouture. All rights reserved.</p>
           <div className="flex items-center gap-2 flex-wrap justify-center">
@@ -215,7 +228,7 @@ export default function Footer() {
             </div>
           </div>
         </div>
-      </div>
+      </FadeIn>
     </footer>
   );
 }

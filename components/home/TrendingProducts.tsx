@@ -9,6 +9,7 @@ import { useWishlistStore } from "@/store/wishlistStore";
 import { useCartStore } from "@/store/cartStore";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { FadeUp, StaggerGrid, StaggerItem } from "@/components/ui/motion";
 
 // Mock data - will be replaced with DB data
 const trendingProducts = [
@@ -216,7 +217,7 @@ function ProductCard({ product }: { product: typeof trendingProducts[0] }) {
 export default function TrendingProducts() {
   return (
     <section className="container mx-auto px-4 lg:px-6 py-16">
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
+      <FadeUp className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
             <Flame className="h-6 w-6 text-[#c9a96e]" />
@@ -235,13 +236,19 @@ export default function TrendingProducts() {
           View All Trending
           <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
         </Link>
-      </div>
+      </FadeUp>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-5">
+      <StaggerGrid
+        stagger={0.07}
+        delayChildren={0.1}
+        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-5"
+      >
         {trendingProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <StaggerItem key={product.id}>
+            <ProductCard product={product} />
+          </StaggerItem>
         ))}
-      </div>
+      </StaggerGrid>
     </section>
   );
 }

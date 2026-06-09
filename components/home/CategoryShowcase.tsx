@@ -9,6 +9,7 @@ import { useWishlistStore } from "@/store/wishlistStore";
 import { useCartStore } from "@/store/cartStore";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { FadeUp, FadeLeft, FadeRight, StaggerGrid, StaggerItem, ImageReveal } from "@/components/ui/motion";
 
 const showcases = [
   {
@@ -148,75 +149,95 @@ function MiniProductCard({ product, showcaseCategory, showcaseSlug }: MiniProduc
 export default function CategoryShowcase() {
   return (
     <div className="flex flex-col">
-      {showcases.map((showcase, index) => (
-        <section
-          key={showcase.slug}
-          className={cn("py-16 md:py-20", index % 2 === 0 ? "bg-white" : "bg-[#fbfaf8]")}
-        >
-          <div className="container mx-auto px-4 lg:px-6">
-            <div className={cn(
-              "grid grid-cols-1 lg:grid-cols-12 gap-8 items-center",
-              index % 2 !== 0 && "lg:flex-row-reverse"
-            )}>
-              {/* Banner */}
-              <div className={cn(
-                "relative rounded-xl overflow-hidden h-72 lg:h-96 shadow-lg lg:col-span-5",
-                index % 2 !== 0 && "lg:order-2"
-              )}>
-                <Image
-                  src={showcase.bannerImage}
-                  alt={showcase.category}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 40vw"
-                />
-                <div className={cn("absolute inset-0 bg-gradient-to-br", showcase.bannerBg)} />
-                <div className="absolute inset-0 p-8 flex flex-col justify-end text-white">
-                  <span className="text-xs font-medium text-[#c9a96e] uppercase tracking-wide mb-1.5">
-                    {showcase.tagline}
-                  </span>
-                  <h2 className="text-3xl font-bold font-serif mb-2">{showcase.category}</h2>
-                  <p className="text-sm text-white/80 mb-6 max-w-sm leading-relaxed">{showcase.description}</p>
-                  <Button asChild variant="gold" size="sm" className="w-fit gap-1.5 uppercase text-xs tracking-wide font-medium">
-                    <Link href={`/category/${showcase.slug}`}>
-                      Shop Collection
-                      <ArrowRight className="h-3.5 w-3.5" />
-                    </Link>
-                  </Button>
-                </div>
-              </div>
+      {showcases.map((showcase, index) => {
+        // Alternate: even → banner comes from left, odd → banner from right
+        const BannerReveal = index % 2 === 0 ? FadeLeft : FadeRight;
+        const ContentReveal = index % 2 === 0 ? FadeRight : FadeLeft;
 
-              {/* Products grid */}
+        return (
+          <section
+            key={showcase.slug}
+            className={cn("py-16 md:py-20", index % 2 === 0 ? "bg-white" : "bg-[#fbfaf8]")}
+          >
+            <div className="container mx-auto px-4 lg:px-6">
               <div className={cn(
-                "lg:col-span-7",
-                index % 2 !== 0 && "lg:order-1"
+                "grid grid-cols-1 lg:grid-cols-12 gap-8 items-center",
+                index % 2 !== 0 && "lg:flex-row-reverse"
               )}>
-                <div className="flex items-center justify-between mb-6 pb-2 border-b">
-                  <h3 className="font-serif font-bold text-lg md:text-xl text-[#1a1a2e]">
-                    Featured in {showcase.category}
-                  </h3>
-                  <Link
-                    href={`/category/${showcase.slug}`}
-                    className="group flex items-center gap-1 text-sm font-semibold text-[#c9a96e] hover:text-[#b8985d] transition-colors"
-                  >
-                    See All <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-                  </Link>
-                </div>
-                <div className="grid grid-cols-3 gap-4">
-                  {showcase.products.map((product) => (
-                    <MiniProductCard 
-                      key={product.id} 
-                      product={product} 
-                      showcaseCategory={showcase.category}
-                      showcaseSlug={showcase.slug}
+                {/* Banner */}
+                <BannerReveal
+                  className={cn(
+                    "relative rounded-xl overflow-hidden h-72 lg:h-96 shadow-lg lg:col-span-5",
+                    index % 2 !== 0 && "lg:order-2"
+                  )}
+                >
+                  <ImageReveal className="absolute inset-0">
+                    <Image
+                      src={showcase.bannerImage}
+                      alt={showcase.category}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 1024px) 100vw, 40vw"
                     />
-                  ))}
-                </div>
+                  </ImageReveal>
+                  <div className={cn("absolute inset-0 bg-gradient-to-br", showcase.bannerBg)} />
+                  <FadeUp
+                    delay={0.2}
+                    className="absolute inset-0 p-8 flex flex-col justify-end text-white"
+                  >
+                    <span className="text-xs font-medium text-[#c9a96e] uppercase tracking-wide mb-1.5">
+                      {showcase.tagline}
+                    </span>
+                    <h2 className="text-3xl font-bold font-serif mb-2">{showcase.category}</h2>
+                    <p className="text-sm text-white/80 mb-6 max-w-sm leading-relaxed">{showcase.description}</p>
+                    <Button asChild variant="gold" size="sm" className="w-fit gap-1.5 uppercase text-xs tracking-wide font-medium">
+                      <Link href={`/category/${showcase.slug}`}>
+                        Shop Collection
+                        <ArrowRight className="h-3.5 w-3.5" />
+                      </Link>
+                    </Button>
+                  </FadeUp>
+                </BannerReveal>
+
+                {/* Products grid */}
+                <ContentReveal
+                  className={cn(
+                    "lg:col-span-7",
+                    index % 2 !== 0 && "lg:order-1"
+                  )}
+                >
+                  <FadeUp className="flex items-center justify-between mb-6 pb-2 border-b">
+                    <h3 className="font-serif font-bold text-lg md:text-xl text-[#1a1a2e]">
+                      Featured in {showcase.category}
+                    </h3>
+                    <Link
+                      href={`/category/${showcase.slug}`}
+                      className="group flex items-center gap-1 text-sm font-semibold text-[#c9a96e] hover:text-[#b8985d] transition-colors"
+                    >
+                      See All <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                    </Link>
+                  </FadeUp>
+                  <StaggerGrid
+                    stagger={0.07}
+                    delayChildren={0.15}
+                    className="grid grid-cols-3 gap-4"
+                  >
+                    {showcase.products.map((product) => (
+                      <StaggerItem key={product.id}>
+                        <MiniProductCard
+                          product={product}
+                          showcaseCategory={showcase.category}
+                          showcaseSlug={showcase.slug}
+                        />
+                      </StaggerItem>
+                    ))}
+                  </StaggerGrid>
+                </ContentReveal>
               </div>
             </div>
-          </div>
-        </section>
-      ))}
+          </section>
+        );
+      })}
     </div>
   );
 }
